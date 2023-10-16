@@ -10,17 +10,8 @@
 }
 
 .sidenav {
-  padding: 30px;
-  &__list {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-    padding: 0;
-    &__item {
-      display: flex;
-      column-gap: 15px;
-      align-items: center;
-      font-size: 16px;
-    }
+  margin-top: 10px;
+  &__items {
+    padding: 0 20px;
   }
 }
