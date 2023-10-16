@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatListModule } from '@angular/material/list';
 // App imports
 import { FullNamePipe } from './pipes/full-name.pipe';
 import { TitleDirective } from './directives/title.directive';
@@ -25,6 +26,7 @@ const matModules: any[] = [
   MatInputModule,
   MatDatepickerModule,
   MatSnackBarModule,
+  MatListModule,
 ];
 @NgModule({
   declarations: [
