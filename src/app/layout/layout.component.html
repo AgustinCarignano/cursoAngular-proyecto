@@ -1,0 +1,8 @@
+<app-toolbar
+  class="toolbar"
+  (toggleSidebar)="onToggleSidebar($event)"
+></app-toolbar>
+<app-sidebar class="sidebar" [opened]="showSidebar"></app-sidebar>
+<main class="container content">
+  <app-alumns></app-alumns>
+</main>
