@@ -1,0 +1,16 @@
+<mat-drawer-container class="container">
+  <mat-drawer #drawer class="sidenav" mode="side" opened="opened">
+    <mat-nav-list>
+      <mat-list-item
+        class="sidenav__items"
+        *ngFor="let link of navigationLinks"
+        [activated]="link.isActive"
+      >
+        <a matListItemTitle [href]="link.href">{{ link.label }}</a>
+        <button mat-icon-button matListItemMeta>
+          <mat-icon>{{ link.icon }}</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+</mat-drawer-container>

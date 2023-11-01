@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+
 // App imports
 import { FullNamePipe } from './pipes/full-name.pipe';
 import { TitleDirective } from './directives/title.directive';
