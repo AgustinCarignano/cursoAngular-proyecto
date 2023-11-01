@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Alumn } from 'src/app/features/alumns/models/alumn.model';
+import { Student } from 'src/app/dashboard/pages/students/models/student.model';
 
 @Pipe({
   name: 'fullName',
 })
 export class FullNamePipe implements PipeTransform {
-  transform(value: Alumn, capitalize = true): string {
+  transform(value: Student, capitalize = true): string {
     if (capitalize) {
       value.lastName = this.capitalize(value.lastName);
       value.firstName = this.capitalize(value.firstName);

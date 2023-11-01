@@ -1,0 +1,16 @@
+<div class="container">
+  <h1 appTitle>Courses</h1>
+  <div class="button">
+    <button mat-raised-button color="primary" (click)="newCourse()">
+      <mat-icon>add</mat-icon>
+      {{ "Create a new course" | uppercase }}
+    </button>
+  </div>
+  <ng-container *ngIf="courses$ | async as courses">
+    <div class="row">
+      <div class="col-4 p-3" *ngFor="let course of courses">
+        <app-course-card [course]="course" (editCourse)="editCourse($event)"></app-course-card>
+      </div>
+    </div>
+  </ng-container>
+</div>
