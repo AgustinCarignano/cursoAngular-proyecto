@@ -1,0 +1,69 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-label>Course title</mat-label>
+        <input matInput formControlName="title" />
+        <mat-error>{{ getControlError("title") | formError }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-label>Next start date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="nextStartDate"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>{{
+          getControlError("nextStartDate") | formError
+        }}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col">
+        <mat-label>Image URL</mat-label>
+        <input matInput formControlName="imgUrl" type="url" />
+        <mat-error>{{ getControlError("imgUrl") | formError }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-label>Course short description</mat-label>
+        <textarea
+          matInput
+          placeholder="Some short description here (max 150 characters)"
+          formControlName="shortDescription"
+        ></textarea>
+        <mat-error>{{
+          getControlError("shortDescription") | formError
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-label>Course description</mat-label>
+        <textarea
+          matInput
+          rows="5"
+          placeholder="Some description here..."
+          formControlName="description"
+        ></textarea>
+        <mat-error>{{ getControlError("description") | formError }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-checkbox class="col" formControlName="available"
+        >Course available</mat-checkbox
+      >
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Cancel</button>
+  <button mat-button (click)="onSubmit()" cdkFocusInitial>Save</button>
+</div>
