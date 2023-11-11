@@ -11,7 +11,7 @@ export class LayoutService {
       label: Paths.HOME,
       href: ['', Paths.DASHBOARD, Paths.HOME],
       icon: 'home',
-      isActive: false,
+      isActive: true,
     },
     {
       label: Paths.USERS,
@@ -23,7 +23,7 @@ export class LayoutService {
       label: Paths.STUDENTS,
       href: ['', Paths.DASHBOARD, Paths.STUDENTS],
       icon: 'groups',
-      isActive: true,
+      isActive: false,
     },
     {
       label: Paths.COURSES,
@@ -35,6 +35,12 @@ export class LayoutService {
       label: Paths.ENROLLMENTS,
       href: ['', Paths.DASHBOARD, Paths.ENROLLMENTS],
       icon: 'view_agenda',
+      isActive: false,
+    },
+    {
+      label: Paths.PROFESORS,
+      href: ['', Paths.DASHBOARD, Paths.PROFESORS],
+      icon: 'supervised_user_circle',
       isActive: false,
     },
   ];

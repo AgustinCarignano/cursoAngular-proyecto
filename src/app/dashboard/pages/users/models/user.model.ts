@@ -3,7 +3,8 @@ import { IAPIUser } from './user-api.model';
 
 export interface IUser {
   id: number;
-  userName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   role: UserRole;
@@ -11,14 +12,16 @@ export interface IUser {
 
 export class User implements IUser {
   id: number;
-  userName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   role: UserRole;
 
   constructor(data: IAPIUser) {
     this.id = data.id;
-    this.userName = data.userName;
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
     this.email = data.email;
     this.password = data.password;
     this.role = data.role;

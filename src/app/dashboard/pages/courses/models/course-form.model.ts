@@ -5,7 +5,6 @@ export interface CourseFormControls {
   title: FormControl<string | null>;
   shortDescription: FormControl<string | null>;
   description: FormControl<string | null>;
-  nextStartDate: FormControl<Date | null>;
   imgUrl: FormControl<string | null>;
   available: FormControl<boolean | null>;
 }
@@ -17,7 +16,6 @@ export class CourseForm {
     Validators.maxLength(150),
   ]);
   description = new FormControl('', [Validators.required]);
-  nextStartDate = new FormControl<Date | null>(null);
   imgUrl = new FormControl('', [Validators.required]);
   available = new FormControl(true);
   public form: FormGroup<CourseFormControls>;
@@ -27,7 +25,6 @@ export class CourseForm {
       title: this.title,
       shortDescription: this.shortDescription,
       description: this.description,
-      nextStartDate: this.nextStartDate,
       imgUrl: this.imgUrl,
       available: this.available,
     });

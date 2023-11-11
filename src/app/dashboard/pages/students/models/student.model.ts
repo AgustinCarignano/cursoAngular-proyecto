@@ -1,6 +1,9 @@
+import { Person } from 'src/app/dashboard/commons/person/models/person.model';
 import { APIStudent } from './student-api.model';
 
-export interface Student {
+export interface IStudent extends Person {}
+
+export class Student implements IStudent {
   id: number;
   firstName: string;
   lastName: string;
@@ -11,21 +14,16 @@ export interface Student {
   country: string;
   province: string;
   city: string;
-}
-
-export class Student implements Student {
   constructor(data: APIStudent) {
-    return {
-      id: data.id,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      birthdate: new Date(data.birthdate),
-      dni: data.dni,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      country: data.country,
-      province: data.province,
-      city: data.city,
-    };
+    this.id = data.id;
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
+    this.birthdate = new Date(data.birthdate);
+    this.dni = data.dni;
+    this.email = data.email;
+    this.phoneNumber = data.phoneNumber;
+    this.country = data.country;
+    this.province = data.province;
+    this.city = data.city;
   }
 }

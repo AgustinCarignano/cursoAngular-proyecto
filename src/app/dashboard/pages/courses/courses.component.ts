@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { CoursesService } from './services/courses.service';
-import { Course } from './models/course.model';
+import { Course } from './models';
 import { CourseDialogService } from './services/course-dialog.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ActionsMessages } from 'src/app/core/enums/messages';
+import { CourseApiService } from './services/course-api.service';
 
 @Component({
   selector: 'app-courses',
@@ -16,11 +16,11 @@ export class CoursesComponent implements OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
 
   constructor(
-    private courseService: CoursesService,
+    private courseApiService: CourseApiService,
     private dialogService: CourseDialogService,
     private notificationService: NotificationService
   ) {
-    this.courses$ = this.courseService.getCourses();
+    this.courses$ = this.courseApiService.getCourses();
   }
 
   public newCourse(): void {
@@ -30,7 +30,7 @@ export class CoursesComponent implements OnDestroy {
       .subscribe({
         next: (data) => {
           if (data) {
-            this.courses$ = this.courseService.addCourse(data);
+            this.courses$ = this.courseApiService.createCourse(data);
             this.notificationService.showNotification(
               ActionsMessages.addedCourse
             );
@@ -39,15 +39,20 @@ export class CoursesComponent implements OnDestroy {
       });
   }
 
-  public editCourse(course:Course): void {
-    this.dialogService.openFormDialog("Edit course",course).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (data)=> {
-        if(data){
-          this.courses$ = this.courseService.editCourse(data);
-          this.notificationService.showNotification(ActionsMessages.editedCourse)
-        }
-      }
-    })
+  public editCourse(course: Course): void {
+    this.dialogService
+      .openFormDialog('Edit course', course)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            this.courses$ = this.courseApiService.updateCourse(data);
+            this.notificationService.showNotification(
+              ActionsMessages.editedCourse
+            );
+          }
+        },
+      });
   }
 
   ngOnDestroy(): void {

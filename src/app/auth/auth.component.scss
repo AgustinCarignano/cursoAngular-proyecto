@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+.card {
+  display: flex;
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  align-items: center;
+  text-align: center;
+}

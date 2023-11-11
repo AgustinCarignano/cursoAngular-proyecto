@@ -38,8 +38,15 @@ const routes: Routes = [
           ),
       },
       {
+        path: Paths.PROFESORS,
+        loadChildren: () =>
+          import('./pages/professors/professors.module').then(
+            (m) => m.ProfessorsModule
+          ),
+      },
+      {
         path: '**',
-        redirectTo: 'home',
+        redirectTo: Paths.HOME,
       },
     ],
   },

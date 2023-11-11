@@ -1,5 +1,5 @@
 export enum Paths {
-  AUTH = 'AUTH',
+  AUTH = 'auth',
   LOGIN = 'login',
   REGISTER = 'register',
   DASHBOARD = 'dashboard',
@@ -8,6 +8,7 @@ export enum Paths {
   STUDENTS = 'students',
   COURSES = 'courses',
   ENROLLMENTS = 'enrollments',
+  PROFESORS = 'professors',
   DETAILS = 'details',
   ID = ':id',
 }

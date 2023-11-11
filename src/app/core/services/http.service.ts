@@ -1,16 +1,66 @@
+import { Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map, tap, concatMap, catchError, throwError } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { ErrorService } from './error.service';
 
 export abstract class HttpService<T> {
-  constructor(protected _http: HttpClient, protected _baseUrl: string) {}
+  protected _http: HttpClient;
+  protected authService: AuthService;
+  protected errorService: ErrorService;
+  constructor(protected _baseUrl: string, protected inject: Injector) {
+    this.authService = this.inject.get(AuthService);
+    this._http = this.inject.get(HttpClient);
+    this.errorService = this.inject.get(ErrorService);
+  }
 
-  abstract getAll(): Observable<T[]>;
+  protected getAll(query?: string): Observable<T[]> {
+    let url = query ? `${this._baseUrl}?${query}` : this._baseUrl;
+    return this._http
+      .get<T[]>(url, {
+        headers: this.getHeaders(),
+      })
+      .pipe(
+        catchError((err) => {
+          this.errorService.handleError(err);
+          return throwError(() => err);
+        })
+      );
+  }
 
-  abstract getOne(id: number): Observable<T>;
+  protected getOne(id: number): Observable<T> {
+    return this._http.get<T>(this._baseUrl + '/' + id, {
+      headers: this.getHeaders(),
+    });
+  }
 
-  abstract update(id: number, data: T): Observable<T[]>;
+  protected update(id: number, data: T): Observable<T[]> {
+    return this._http
+      .put<T>(this._baseUrl + '/' + id, data, {
+        headers: this.getHeaders(),
+      })
+      .pipe(concatMap(() => this.getAll()));
+  }
 
-  abstract create(data: T): Observable<T[]>;
+  protected create(data: T): Observable<T[]> {
+    return this._http
+      .post<T[]>(this._baseUrl, data, {
+        headers: this.getHeaders(),
+      })
+      .pipe(concatMap(() => this.getAll()));
+  }
 
-  abstract delete(id: number): Observable<T[]>;
+  protected delete(id: number): Observable<T[]> {
+    return this._http
+      .delete<void>(this._baseUrl + '/' + id, {
+        headers: this.getHeaders(),
+      })
+      .pipe(concatMap(() => this.getAll()));
+  }
+
+  private getHeaders() {
+    return {
+      Authorization: 'Bearer ' + this.authService.getTokenvalue(),
+    };
+  }
 }
