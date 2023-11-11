@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import {
   AuthResponse,
   LoginRequest,
@@ -17,10 +17,10 @@ import { User } from 'src/app/dashboard/pages/users/models/user.model';
 export class AuthService {
   readonly storageName = 'loggedUser';
   private base_url = 'http://localhost:3000';
-  private _localSotageInfo: BehaviorSubject<AuthResponse | null> =
+  private _localStorageInfo: BehaviorSubject<AuthResponse | null> =
     new BehaviorSubject<AuthResponse | null>(null);
-  public localSotageInfo: Observable<AuthResponse | null> =
-    this._localSotageInfo.asObservable();
+  public localStorageInfo: Observable<AuthResponse | null> =
+    this._localStorageInfo.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
     this.checkSession();
@@ -51,7 +51,7 @@ export class AuthService {
   }
 
   public getLoggedUser(): Observable<User> {
-    const data = this._localSotageInfo.getValue();
+    const data = this._localStorageInfo.getValue();
     return this.http
       .get<User[]>(
         `${this.base_url}/${Paths.USERS}?email=${data?.user.email}`,
@@ -65,7 +65,7 @@ export class AuthService {
   }
 
   public getTokenvalue(): string {
-    return this._localSotageInfo.getValue()?.accessToken || '';
+    return this._localStorageInfo.getValue()?.accessToken || '';
   }
 
   private openSession(info: AuthResponse): void {
@@ -74,7 +74,7 @@ export class AuthService {
       user: { email: info.user.email },
     };
     localStorage.setItem(this.storageName, JSON.stringify(itemToStore));
-    this._localSotageInfo.next(itemToStore);
+    this._localStorageInfo.next(itemToStore);
     this.router.navigate([Paths.DASHBOARD]);
   }
 
@@ -94,7 +94,7 @@ export class AuthService {
 
   private destroySession(): void {
     localStorage.removeItem(this.storageName);
-    this._localSotageInfo.next(null);
+    this._localStorageInfo.next(null);
     // this.router.createUrlTree([Paths.AUTH]);
   }
 }

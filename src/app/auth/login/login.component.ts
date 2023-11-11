@@ -11,18 +11,17 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent {
   public form: FormGroup<LoginFormControls>;
 
-  constructor(private authsrevice: AuthService) {
-    this.form = new LoginForm({
-      email: 'admin@admin.com',
-      password: 'admin12345',
-    }).form;
+  constructor(private authService: AuthService) {
+    this.form = new LoginForm().form;
   }
+  /* email: 'admin@admin.com',
+      password: 'admin12345', */
 
   public onLogin(): void {
     if (this.form.invalid) {
       return this.form.markAllAsTouched();
     }
-    this.authsrevice.login(this.form.getRawValue());
+    this.authService.login(this.form.getRawValue());
   }
 
   public getControlError(control: string): ValidationErrors | null {
