@@ -4,7 +4,9 @@
       <mat-list-item
         class="sidenav__items"
         *ngFor="let link of navigationLinks"
-        [activated]="link.isActive"
+        routerLinkActive
+        #itemLink="routerLinkActive"
+        [activated]="itemLink.isActive"
         [routerLink]="link.href"
       >
         <a matListItemTitle routerLinkActive="router-link-active">{{
