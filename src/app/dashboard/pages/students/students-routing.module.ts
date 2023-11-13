@@ -6,7 +6,7 @@ import { StudentDetailComponent } from './components/student-detail/student-deta
 
 const routes: Routes = [
   { path: '', component: StudentsComponent },
-  { path: Paths.ID, component: StudentDetailComponent },
+  { path: `${Paths.DETAILS}/${Paths.ID}`, component: StudentDetailComponent },
 ];
 
 @NgModule({

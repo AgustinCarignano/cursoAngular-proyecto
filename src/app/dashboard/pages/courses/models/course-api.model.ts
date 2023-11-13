@@ -5,7 +5,6 @@ export interface IAPICourse {
   title: string;
   shortDescription: string;
   description: string;
-  nextStartDate: string | null;
   imgUrl: string;
   available: boolean;
 }
@@ -15,7 +14,6 @@ export class APICourse implements IAPICourse {
   title: string;
   shortDescription: string;
   description: string;
-  nextStartDate: string | null;
   imgUrl: string;
   available: boolean;
 
@@ -24,7 +22,6 @@ export class APICourse implements IAPICourse {
     this.title = data.title;
     this.shortDescription = data.shortDescription;
     this.description = data.description;
-    this.nextStartDate = data.nextStartDate?.toISOString() ?? null;
     this.imgUrl = data.imgUrl;
     this.available = data.available;
   }

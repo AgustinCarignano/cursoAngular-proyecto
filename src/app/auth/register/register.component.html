@@ -1,0 +1,29 @@
+<h1>Register</h1>
+<form [formGroup]="form" class="form">
+  <mat-form-field class="form__field">
+    <mat-label> First Name </mat-label>
+    <input matInput formControlName="firstName" type="text" />
+    <mat-error>{{ form | getError : "firstName" | showError }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="form__field">
+    <mat-label> Last Name </mat-label>
+    <input matInput formControlName="lastName" type="text" />
+    <mat-error>{{ form | getError : "lastName" | showError }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="form__field">
+    <mat-label> Email </mat-label>
+    <input matInput formControlName="email" type="email" />
+    <mat-error>{{ form | getError : "email" | showError }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="form__field">
+    <mat-label> Password </mat-label>
+    <input matInput formControlName="password" type="password" />
+    <mat-error>{{ form | getError : "password" | showError }}</mat-error>
+  </mat-form-field>
+  <div class="form__actions">
+    <a mat-flat-button [routerLink]="['', 'auth', 'login']">Login</a>
+    <button mat-flat-button color="primary" (click)="onRegister()">
+      Register
+    </button>
+  </div>
+</form>

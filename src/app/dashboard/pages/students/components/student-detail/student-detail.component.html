@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <h1 appTitle>Student details</h1>
   <ng-container *ngIf="student$ | async as student">
     <mat-accordion multi>
@@ -87,4 +87,5 @@
       </mat-expansion-panel>
     </mat-accordion>
   </ng-container>
-</div>
+</div> -->
+<app-person-detail [person$]="student$" [title]="pageTitle"></app-person-detail>

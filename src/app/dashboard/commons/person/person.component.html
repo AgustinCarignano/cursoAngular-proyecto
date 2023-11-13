@@ -1,0 +1,16 @@
+<!-- <div class="container"> -->
+<h1 appTitle>{{ title }}</h1>
+<div class="button">
+  <button mat-raised-button color="primary" (click)="newPerson()">
+    <mat-icon>add</mat-icon>
+    {{ addButtonLabel | uppercase }}
+  </button>
+</div>
+<ng-container *ngIf="persons$ | async as persons">
+  <app-person-table
+    [data]="persons"
+    (onEdit)="editPerson($event)"
+    (onDelete)="deletePerson($event)"
+  ></app-person-table>
+</ng-container>
+<!-- </div> -->

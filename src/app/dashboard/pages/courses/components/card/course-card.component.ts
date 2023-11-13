@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Course } from '../../models/course.model';
+import { Course } from '../../models';
 
 @Component({
   selector: 'app-course-card',
@@ -12,7 +12,7 @@ export class CourseCardComponent {
   @Output()
   editCourse: EventEmitter<Course> = new EventEmitter();
 
-  public onEditCourse():void {
+  public onEditCourse(): void {
     this.editCourse.emit(this.course);
   }
 }

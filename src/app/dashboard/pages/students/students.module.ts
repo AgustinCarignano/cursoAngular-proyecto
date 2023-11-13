@@ -12,7 +12,8 @@ import { StudentsTableComponent } from './components/student-table/student-table
 import { StudentsRoutingModule } from './students-routing.module';
 import { StudentsDialogService } from './services/student-dialog.service';
 import { StudentDetailComponent } from './components/student-detail/student-detail.component';
-import { AgePipe } from './pipes/age.pipe';
+import { PersonModule } from '../../commons/person/person.module';
+import { PersonDialogService } from '../../commons/person/services/person-dialog.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,6 @@ import { AgePipe } from './pipes/age.pipe';
     StudentsFormComponent,
     StudentsTableComponent,
     StudentDetailComponent,
-    AgePipe,
   ],
   imports: [
     CommonModule,
@@ -31,8 +31,9 @@ import { AgePipe } from './pipes/age.pipe';
     MatExpansionModule,
     SharedModule,
     StudentsRoutingModule,
+    PersonModule,
   ],
   exports: [StudentsComponent],
-  providers: [StudentsDialogService],
+  providers: [StudentsDialogService, PersonDialogService],
 })
 export class StudentsModule {}

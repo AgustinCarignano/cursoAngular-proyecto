@@ -1,17 +1,7 @@
+import { APIPerson } from 'src/app/dashboard/commons/person/models/person.model';
 import { Student } from './student.model';
 
-export interface IAPIStudent {
-  id: number;
-  firstName: string;
-  lastName: string;
-  birthdate: string;
-  dni: string;
-  email: string;
-  phoneNumber: string;
-  country: string;
-  province: string;
-  city: string;
-}
+export interface IAPIStudent extends APIPerson {}
 
 export class APIStudent implements IAPIStudent {
   id: number;

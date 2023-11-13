@@ -1,0 +1,90 @@
+<div class="container">
+  <h1 appTitle>{{ title }}</h1>
+  <ng-container *ngIf="person$ | async as person">
+    <mat-accordion multi>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Personal information </mat-panel-title>
+          <mat-panel-description class="d-flex justify-content-end">
+            <mat-icon>account_circle</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="m-3 row">
+          <div class="col-3">
+            <p><strong>First name</strong></p>
+            <p>{{ person.firstName }}</p>
+          </div>
+          <div class="col-3">
+            <p><strong>Last name</strong></p>
+            <p>{{ person.lastName }}</p>
+          </div>
+          <div class="col-3">
+            <p><strong>Age</strong></p>
+            <p>{{ person.birthdate | age }}</p>
+          </div>
+          <div class="col-3">
+            <p><strong>DNI</strong></p>
+            <p>{{ person.dni }}</p>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Contact information</mat-panel-title>
+          <mat-panel-description class="d-flex justify-content-end">
+            <mat-icon>contact_page</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="m-3 row">
+          <div class="col-3">
+            <p><strong>Email</strong></p>
+            <p>{{ person.email }}</p>
+          </div>
+          <div class="col-3">
+            <p><strong>Phone number</strong></p>
+            <p>{{ person.phoneNumber }}</p>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Address information</mat-panel-title>
+          <mat-panel-description class="d-flex justify-content-end">
+            <mat-icon>home</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="m-3 row">
+          <div class="col-3">
+            <p><strong>Country</strong></p>
+            <p>{{ person.country }}</p>
+          </div>
+          <div class="col-3">
+            <p><strong>Province</strong></p>
+            <p>{{ person.province }}</p>
+          </div>
+          <div class="col-3">
+            <p><strong>City</strong></p>
+            <p>{{ person.city }}</p>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Courses </mat-panel-title>
+          <mat-panel-description class="d-flex justify-content-end">
+            <mat-icon>toc</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div>
+          <p>
+            (list of courses for which the student is enrolled, including
+            completed courses)
+          </p>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-container>
+</div>

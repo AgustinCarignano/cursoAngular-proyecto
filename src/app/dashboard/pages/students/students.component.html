@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <h1 appTitle>Students List</h1>
   <div class="button">
     <button mat-raised-button color="primary" (click)="newStudent()">
@@ -13,4 +13,13 @@
       (onDelete)="deleteStudent($event)"
     ></app-students-table>
   </ng-container>
-</div>
+</div> -->
+
+<app-person
+  [title]="pageTitle"
+  [addButtonLabel]="buttonLabel"
+  [persons$]="students$"
+  (onAdd)="newStudent()"
+  (onEdit)="editStudent($event)"
+  (onDelete)="deleteStudent($event)"
+></app-person>
