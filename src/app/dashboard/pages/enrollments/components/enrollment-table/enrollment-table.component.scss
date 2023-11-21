@@ -1,0 +1,43 @@
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.edition-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.edition-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.edition-row td {
+  border-bottom-width: 0;
+}
+
+.edition-detail {
+  overflow: hidden;
+  margin: 0;
+  h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+  }
+  ul {
+    margin: 0;
+    padding: 0 5px;
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 400px;
+      border-bottom: solid 1px whitesmoke;
+      p {
+        margin: 0;
+      }
+    }
+  }
+}

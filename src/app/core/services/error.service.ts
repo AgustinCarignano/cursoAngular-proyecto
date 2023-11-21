@@ -12,7 +12,7 @@ export class ErrorService {
   handleError(err: any): void {
     switch (err.status) {
       case 401:
-        alert('The session has expired');
+        // alert('The session has expired');
         this.authService.logout();
         // this.notificationService
         //   .showNotification('Session expired. Please, signin again')

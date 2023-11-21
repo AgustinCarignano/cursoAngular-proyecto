@@ -21,8 +21,8 @@ export class StudentApiService extends HttpService<APIStudent> {
     );
   }
 
-  getOneStudent(courseid: number): Observable<Student> {
-    return this.getOne(courseid).pipe(map((student) => new Student(student)));
+  getOneStudent(studentId: number): Observable<Student> {
+    return this.getOne(studentId).pipe(map((student) => new Student(student)));
   }
 
   updateStudent(student: Student): Observable<Student[]> {

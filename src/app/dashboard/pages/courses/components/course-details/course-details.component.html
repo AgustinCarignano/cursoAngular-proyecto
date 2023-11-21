@@ -29,54 +29,73 @@
             Create course edition
           </button>
         </div>
-        <ng-container *ngIf="editions$ | async as editions">
-          <table
-            mat-table
-            *ngIf="editions.length > 0; else emptyEdition"
-            [dataSource]="editions"
-          >
-            <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef>No.</th>
-              <td mat-cell *matCellDef="let edition">{{ edition.id }}</td>
-            </ng-container>
-            <ng-container matColumnDef="startDate">
-              <th mat-header-cell *matHeaderCellDef>Start date</th>
-              <td mat-cell *matCellDef="let edition">
-                {{ edition.startDate | date : "dd/MM/yyyy" }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="endDate">
-              <th mat-header-cell *matHeaderCellDef>End date</th>
-              <td mat-cell *matCellDef="let edition">
-                {{ edition.endDate | date : "dd/MM/yyyy" }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef>Actions</th>
-              <td mat-cell *matCellDef="let row">
-                <button mat-icon-button color="primary" [routerLink]="row.id">
-                  <mat-icon>fact_check</mat-icon>
-                </button>
-                <button
-                  mat-icon-button
-                  color="primary"
-                  (click)="editEdition(row)"
-                >
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button
-                  mat-icon-button
-                  color="warn"
-                  (click)="deleteEdition(row.id)"
-                >
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: tableColumns"></tr>
-          </table>
+        <ng-container
+          *ngIf="{
+            editions: editions$ | async,
+            professors: professors$ | async
+          } as info"
+        >
+          <ng-container *ngIf="info.editions && info.professors">
+            <table
+              mat-table
+              *ngIf="info.editions.length > 0; else emptyEdition"
+              [dataSource]="info.editions"
+            >
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let edition">{{ edition.id }}</td>
+              </ng-container>
+              <ng-container matColumnDef="startDate">
+                <th mat-header-cell *matHeaderCellDef>Start date</th>
+                <td mat-cell *matCellDef="let edition">
+                  {{ edition.startDate | date : "dd/MM/yyyy" }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="endDate">
+                <th mat-header-cell *matHeaderCellDef>End date</th>
+                <td mat-cell *matCellDef="let edition">
+                  {{ edition.endDate | date : "dd/MM/yyyy" }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="professor">
+                <th mat-header-cell *matHeaderCellDef>Professor</th>
+                <td mat-cell *matCellDef="let edition">
+                  {{
+                    getEditionProfessor(edition.professorId, info.professors)
+                      | fullName
+                  }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let row">
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    (click)="enrollStudent(row.id)"
+                  >
+                    <mat-icon>fact_check</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    (click)="editEdition(row)"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    (click)="deleteEdition(row.id)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: tableColumns"></tr>
+            </table>
+          </ng-container>
         </ng-container>
       </div>
     </div>

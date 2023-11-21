@@ -34,9 +34,15 @@ export abstract class HttpService<T> {
     });
   }
 
-  protected update(id: number, data: T): Observable<T[]> {
+  protected getPopulated<K>(query: string): Observable<K[]> {
+    return this._http.get<K[]>(`${this._baseUrl}?${query}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  protected update(id: number, data: Partial<T>): Observable<T[]> {
     return this._http
-      .put<T>(this._baseUrl + '/' + id, data, {
+      .patch<T>(this._baseUrl + '/' + id, data, {
         headers: this.getHeaders(),
       })
       .pipe(concatMap(() => this.getAll()));
@@ -52,7 +58,7 @@ export abstract class HttpService<T> {
 
   protected delete(id: number): Observable<T[]> {
     return this._http
-      .delete<void>(this._baseUrl + '/' + id, {
+      .delete<Object>(this._baseUrl + '/' + id, {
         headers: this.getHeaders(),
       })
       .pipe(concatMap(() => this.getAll()));

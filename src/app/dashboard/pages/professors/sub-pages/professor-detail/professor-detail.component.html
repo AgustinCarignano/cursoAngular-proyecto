@@ -1,4 +1,5 @@
 <app-person-detail
-  [person$]="professor$"
+  *ngIf="professor$ | async as professor"
+  [person]="professor"
   [title]="pagetitle"
 ></app-person-detail>

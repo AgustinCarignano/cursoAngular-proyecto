@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Student } from '../../models/student.model';
 import { StudentApiService } from '../../services/student-api.service';
+import { StudentsService } from '../../services/student.service';
 
 @Component({
   selector: 'app-student-detail',
@@ -15,9 +16,12 @@ export class StudentDetailComponent {
 
   constructor(
     private studentApiService: StudentApiService,
+    private studentService: StudentsService,
     private router: ActivatedRoute
   ) {
     const id: string = this.router.snapshot.params['id'];
-    if (id) this.student$ = this.studentApiService.getOneStudent(Number(id));
+    // if (id) this.student$ = this.studentApiService.getOneStudent(Number(id));
+    if (id)
+      this.student$ = this.studentService.getCompleteStudentDetail(Number(id));
   }
 }

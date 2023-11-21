@@ -1,4 +1,9 @@
-<p>
-  List of all users registered in the application, with the role and,
-  conditionally, with a button to edit a user's role or delete it
-</p>
+<h1 appTitle>List of users</h1>
+<button mat-flat-button color="primary" class="button" (click)="addUser()">
+  <mat-icon>add</mat-icon>{{ "New user" | uppercase }}
+</button>
+<app-user-table
+  [dataSource]="(users$ | async) || []"
+  (onEdit)="editUser($event)"
+  (onDelete)="deleteUser($event)"
+></app-user-table>

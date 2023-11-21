@@ -7,6 +7,7 @@ export { CourseEditionDialog } from './course-edition-dialog.model';
 export {
   APICourseEdition,
   IAPICourseEdition,
+  IAPICourseEditionPopulated,
 } from './course-api-edition.model';
 export {
   CourseEditionForm,

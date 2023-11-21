@@ -27,4 +27,11 @@ export class LoginComponent {
   public getControlError(control: string): ValidationErrors | null {
     return this.form.get(control)?.errors || null;
   }
+
+  public autoComplete(): void {
+    this.form.patchValue({
+      email: 'admin@admin.com',
+      password: 'admin12345',
+    });
+  }
 }

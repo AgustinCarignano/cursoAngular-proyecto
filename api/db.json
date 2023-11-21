@@ -1,11 +1,6 @@
 {
   "users": [
     {
-      "email": "olivier@mail.com",
-      "password": "$2a$10$bYdmbqQJ4kPd544Qt4nHXeRze5Rzi6ASDgbhoUVmIdP75lv9c05Yu",
-      "id": 1
-    },
-    {
       "email": "admin@admin.com",
       "password": "$2a$10$euvBLnF3SJzSxhxHejR8aO7yY8mrNNKvnCGE8SctsebIwOyoypqKS",
       "firstName": "Agustin",
@@ -457,6 +452,20 @@
       "startDate": "2023-11-19T23:00:00.000Z",
       "endDate": "2023-12-28T23:00:00.000Z",
       "id": 1
+    },
+    {
+      "courseId": 1,
+      "professorId": 4,
+      "startDate": "2023-12-18T23:00:00.000Z",
+      "endDate": "2024-01-22T23:00:00.000Z",
+      "id": 2
+    },
+    {
+      "courseId": 2,
+      "professorId": 19,
+      "startDate": "2023-12-19T23:00:00.000Z",
+      "endDate": "2024-01-30T23:00:00.000Z",
+      "id": 3
     }
   ],
   "professors": [
@@ -699,6 +708,23 @@
       "country": "United States",
       "province": "California",
       "city": "Berkeley"
+    }
+  ],
+  "enrollments": [
+    {
+      "editionId": 2,
+      "studentId": 10,
+      "id": 3
+    },
+    {
+      "editionId": 2,
+      "studentId": 29,
+      "id": 4
+    },
+    {
+      "editionId": 1,
+      "studentId": 2,
+      "id": 5
     }
   ]
 }

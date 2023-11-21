@@ -88,4 +88,25 @@
     </mat-accordion>
   </ng-container>
 </div> -->
-<app-person-detail [person$]="student$" [title]="pageTitle"></app-person-detail>
+<app-person-detail
+  *ngIf="student$ | async as student"
+  [person]="student"
+  [title]="pageTitle"
+>
+  <ng-container
+    *ngIf="
+      student.enrollments && student.enrollments.length > 0;
+      else emptyList
+    "
+  >
+    <div *ngFor="let enrollment of student.enrollments">
+      {{ enrollment.edition?.course?.title }}
+    </div>
+  </ng-container>
+</app-person-detail>
+
+<ng-template #emptyList>
+  <app-empty-state
+    [message]="'There are no courses for this student.'"
+  ></app-empty-state>
+</ng-template>
