@@ -8,15 +8,14 @@
   [editions]="(editions$ | async) || []"
   [students]="(students$ | async) || []"
 ></app-search-card>
-<ng-container *ngIf="editionEnrollments$ | async as data; else loading">
+<ng-container *ngIf="editionEnrollments$ | async as data">
   <app-enrollment-table
-    [dataSource]="data || []"
+    [dataSource]="getFilterData(data)"
     (addStudent)="onAddStudent($event)"
     (deleteEnrollment)="onDeleteEnrollment($event)"
     (editEdition)="onEditEdition($event)"
   ></app-enrollment-table>
 </ng-container>
-<!-- <pre>{{ editionEnrollments$ | async | json }}</pre> -->
 
 <ng-template #loading>
   <app-spinner></app-spinner>

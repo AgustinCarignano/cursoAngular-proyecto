@@ -1,7 +1,7 @@
 <div class="container">
   <h1 appTitle>{{ title }}</h1>
   <!-- <ng-container *ngIf="person"> -->
-  <mat-accordion multi>
+  <mat-accordion [multi]="false">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title> Personal information </mat-panel-title>

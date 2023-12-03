@@ -1,8 +1,11 @@
-import { User } from 'src/app/dashboard/pages/users/models/user.model';
+import {
+  PublicUser,
+  User,
+} from 'src/app/dashboard/pages/users/models/user.model';
 
 export interface AuthResponse {
   accessToken: string;
-  user: Partial<User>;
+  user: PublicUser;
 }
 
 export interface LoginRequest {

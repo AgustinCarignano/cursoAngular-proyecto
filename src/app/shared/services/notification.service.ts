@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
+import { ActionsMessages } from 'src/app/core/enums/messages';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,9 @@ import { Observable } from 'rxjs';
 export class NotificationService {
   constructor(private snackBar: MatSnackBar) {}
 
-  public showNotification(message: string): Observable<MatSnackBarDismiss> {
+  public showNotification(
+    message: ActionsMessages
+  ): Observable<MatSnackBarDismiss> {
     return this.snackBar
       .open(message, 'ACEPTAR', {
         verticalPosition: 'top',

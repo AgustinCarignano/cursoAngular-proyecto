@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from './models/user.model';
-import { UserApiService } from './services/user-api.service';
+import { PublicUser, User } from './models/user.model';
 import { MatDialog } from '@angular/material/dialog';
-import { UserFormComponent } from './components/user-form/user-form.component';
-import { UserDialogData } from './models/user-form-data.model';
 import { ConfirmSnackbarComponent } from 'src/app/shared/components/confirm-snackbar/confirm-snackbar.component';
 import { UserDialogService } from './services/user-dialog.service';
+import { Store } from '@ngrx/store';
+import { UserActions, selectOneUser, selectUsers } from './store';
+import { selectAuthUser } from 'src/app/auth/store/auth.selectors';
 
 @Component({
   selector: 'app-users',
@@ -14,21 +14,24 @@ import { UserDialogService } from './services/user-dialog.service';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent {
-  public users$: Observable<User[]>;
+  public users$: Observable<User[] | null>;
+  public loggedUser$: Observable<PublicUser | null>;
 
   constructor(
-    private userApiService: UserApiService,
+    private store: Store,
     private userDialogService: UserDialogService,
     private matDialog: MatDialog
   ) {
-    this.users$ = this.userApiService.getUsers();
+    this.store.dispatch(UserActions.loadUsers());
+    this.users$ = this.store.select(selectUsers);
+    this.loggedUser$ = this.store.select(selectAuthUser);
   }
 
   addUser(): void {
     this.userDialogService.openUserForm({ title: 'New user' }).subscribe({
       next: (data) => {
         if (data) {
-          this.users$ = this.userApiService.addUser(data);
+          this.store.dispatch(UserActions.createUser({ user: data }));
         }
       },
     });
@@ -43,12 +46,12 @@ export class UsersComponent {
       .subscribe({
         next: (data) => {
           if (data) {
-            console.log(data);
-            this.users$ = this.userApiService.updateUser(data);
+            this.store.dispatch(UserActions.updateUser({ user: data }));
           }
         },
       });
   }
+
   public deleteUser(userId: number): void {
     this.matDialog
       .open(ConfirmSnackbarComponent)
@@ -56,7 +59,7 @@ export class UsersComponent {
       .subscribe({
         next: (resp) => {
           if (resp) {
-            this.users$ = this.userApiService.deleteUser(userId);
+            this.store.dispatch(UserActions.deleteUser({ userId }));
           }
         },
       });

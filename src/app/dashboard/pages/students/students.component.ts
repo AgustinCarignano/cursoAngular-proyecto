@@ -8,6 +8,7 @@ import { ActionsMessages } from '../../../core/enums/messages';
 import { StudentApiService } from './services/student-api.service';
 import { PersonDialogService } from '../../commons/person/services/person-dialog.service';
 import { StudentForm } from './models/student-form.model';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-students',
@@ -22,7 +23,8 @@ export class StudentsComponent {
   constructor(
     private studentsApiService: StudentApiService,
     private dialogService: PersonDialogService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private store: Store
   ) {
     this.students$ = this.studentsApiService.getStudents();
   }

@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 // Material imports
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
 // App imports
 import { FullNamePipe } from './pipes/full-name.pipe';
 import { TitleDirective } from './directives/title.directive';
@@ -30,6 +32,8 @@ import { AgePipe } from './pipes/age.pipe';
 import { GetErrorPipe } from './pipes/get-error.pipe';
 import { EmptyStateComponent } from './components/empty-state/empty-state.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { RelatedCoursesPipe } from './pipes/related-courses.pipe';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 const matModules: any[] = [
   MatButtonModule,
@@ -49,6 +53,7 @@ const matModules: any[] = [
   MatProgressSpinnerModule,
   MatExpansionModule,
   MatChipsModule,
+  MatDividerModule,
 ];
 @NgModule({
   declarations: [
@@ -60,8 +65,10 @@ const matModules: any[] = [
     GetErrorPipe,
     EmptyStateComponent,
     SpinnerComponent,
+    RelatedCoursesPipe,
+    BreadcrumbComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, ...matModules],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, ...matModules],
   exports: [
     ReactiveFormsModule,
     FullNamePipe,
@@ -71,6 +78,8 @@ const matModules: any[] = [
     GetErrorPipe,
     EmptyStateComponent,
     SpinnerComponent,
+    RelatedCoursesPipe,
+    BreadcrumbComponent,
     ...matModules,
   ],
   providers: [NotificationService],

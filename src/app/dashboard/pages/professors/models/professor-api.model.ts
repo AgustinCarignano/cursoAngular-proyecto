@@ -1,5 +1,6 @@
 import { APIPerson } from 'src/app/dashboard/commons/person/models/person.model';
 import { Professor } from './professor.model';
+import { APICourseEdition } from '../../courses/models';
 
 export class APIProfessor implements APIPerson {
   birthdate: string;
@@ -12,6 +13,7 @@ export class APIProfessor implements APIPerson {
   country: string;
   province: string;
   city: string;
+  editions?: APICourseEdition[];
 
   constructor(data: Professor) {
     this.birthdate = data.birthdate.toISOString();
@@ -24,5 +26,6 @@ export class APIProfessor implements APIPerson {
     this.country = data.country;
     this.province = data.province;
     this.city = data.city;
+    this.editions = data.editions?.map((e) => new APICourseEdition(e));
   }
 }

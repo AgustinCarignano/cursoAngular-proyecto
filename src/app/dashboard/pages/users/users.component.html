@@ -1,9 +1,22 @@
 <h1 appTitle>List of users</h1>
-<button mat-flat-button color="primary" class="button" (click)="addUser()">
-  <mat-icon>add</mat-icon>{{ "New user" | uppercase }}
-</button>
+<ng-container *ngIf="loggedUser$ | async as user">
+  <button
+    mat-flat-button
+    color="primary"
+    class="button"
+    (click)="addUser()"
+    [disabled]="user.role !== 'admin'"
+  >
+    <mat-icon>add</mat-icon>{{ "New user" | uppercase }}
+  </button>
+</ng-container>
 <app-user-table
-  [dataSource]="(users$ | async) || []"
+  *ngIf="users$ | async as users; else loading"
+  [dataSource]="users"
   (onEdit)="editUser($event)"
   (onDelete)="deleteUser($event)"
 ></app-user-table>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

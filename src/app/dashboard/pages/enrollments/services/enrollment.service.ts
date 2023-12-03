@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EnrollmentApiService } from './enrollment-api.service';
-import { Observable, concatMap, forkJoin, map } from 'rxjs';
+import { Observable, combineLatest, concatMap, forkJoin, map, tap } from 'rxjs';
 import { Enrollment } from '../models';
 import { CourseApiService } from '../../courses/services/course-api.service';
 import { EditionsApiService } from '../../courses/services/editions-api.service';
@@ -16,7 +16,7 @@ export class EnrollmentService {
   ) {}
 
   getcompleteEnrollmentInformation(): Observable<Enrollment[]> {
-    return forkJoin([
+    return combineLatest([
       this.enrollmentApiService.getPopulatedEnrollments(),
       this.editionsApiService.getPopulatedEditions(),
     ]).pipe(
@@ -32,7 +32,7 @@ export class EnrollmentService {
   }
 
   getCompleteEditionEnrollments(): Observable<CourseEdition[]> {
-    return forkJoin([
+    return combineLatest([
       this.editionsApiService.getPopulatedEditions(),
       this.enrollmentApiService.getEnrollmentsWithStudents(),
     ]).pipe(

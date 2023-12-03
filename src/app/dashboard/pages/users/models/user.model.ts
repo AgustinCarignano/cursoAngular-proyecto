@@ -1,13 +1,16 @@
 import { UserRole } from '../enums/user-role.enum';
 import { IAPIUser } from './user-api.model';
 
-export interface IUser {
+export interface PublicUser {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
   role: UserRole;
+}
+
+export interface IUser extends PublicUser {
+  password: string;
 }
 
 export class User implements IUser {

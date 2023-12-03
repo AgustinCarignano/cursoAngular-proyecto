@@ -1,3 +1,4 @@
+<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 <div class="container">
   <h1 appTitle>Course details</h1>
   <ng-container *ngIf="course$ | async as course">
@@ -13,9 +14,9 @@
         <mat-card-content>
           <p>{{ course.description }}</p>
         </mat-card-content>
-        <mat-card-actions>
+        <!-- <mat-card-actions>
           <button mat-button>Algo</button>
-        </mat-card-actions>
+        </mat-card-actions> -->
       </mat-card>
       <div class="col-6">
         <div class="d-flex justify-content-between">
@@ -24,6 +25,7 @@
             mat-flat-button
             color="primary"
             (click)="newEdition(course.id)"
+            [disabled]="!course.available"
           >
             <mat-icon>add</mat-icon>
             Create course edition

@@ -9,11 +9,12 @@ import { User } from 'src/app/dashboard/pages/users/models/user.model';
 export class FullNamePipe implements PipeTransform {
   transform(value?: Person | User, capitalize = true): string {
     if (!value) return '';
+    const copyOfValue = structuredClone(value);
     if (capitalize) {
-      value.lastName = this.capitalize(value.lastName);
-      value.firstName = this.capitalize(value.firstName);
+      copyOfValue.lastName = this.capitalize(copyOfValue.lastName);
+      copyOfValue.firstName = this.capitalize(copyOfValue.firstName);
     }
-    return `${value.lastName}, ${value.firstName}`;
+    return `${copyOfValue.lastName}, ${copyOfValue.firstName}`;
   }
 
   private capitalize(v: string): string {

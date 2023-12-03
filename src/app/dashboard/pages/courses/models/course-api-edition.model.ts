@@ -16,7 +16,7 @@ export interface IAPICourseEdition {
 }
 
 export interface IAPICourseEditionPopulated extends IAPICourseEdition {
-  course: Course;
+  course: APICourse;
 }
 
 export class APICourseEdition implements IAPICourseEdition {

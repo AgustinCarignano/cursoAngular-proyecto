@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, concatMap } from 'rxjs';
+import { Observable, map, concatMap, forkJoin, tap } from 'rxjs';
 import { HttpService } from 'src/app/core/services/http.service';
 import {
   APICourseEdition,
@@ -11,12 +11,17 @@ import {
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment.local';
 import { CourseApiService } from './course-api.service';
+import { EnrollmentApiService } from '../../enrollments/services/enrollment-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EditionsApiService extends HttpService<APICourseEdition> {
-  constructor(injector: Injector, private courseApiService: CourseApiService) {
+  constructor(
+    injector: Injector,
+    private courseApiService: CourseApiService,
+    private enrollmentApiService: EnrollmentApiService
+  ) {
     super(environment.baseUrl + '/editions', injector);
   }
 
@@ -51,8 +56,23 @@ export class EditionsApiService extends HttpService<APICourseEdition> {
     );
   }
 
-  deleteCourseEdition(courseId: number): Observable<CourseEdition[]> {
-    return this.delete(courseId).pipe(map(this.adaptFromApi));
+  deleteCourseEdition(editionId: number): Observable<CourseEdition[]> {
+    console.log('llamando a borrar una edicion');
+    return this.delete(editionId).pipe(
+      tap(() =>
+        this.enrollmentApiService.deleteEnrollmentByEditionId(editionId)
+      ),
+      map(this.adaptFromApi)
+    );
+  }
+
+  deleteEditionByCourseId(courseId: number) {
+    return this.getAll(`corseId=${courseId}`).pipe(
+      concatMap((editions) => {
+        const editionIds = editions.map((e) => e.id);
+        return forkJoin(editionIds.map((id) => this.deleteCourseEdition(id)));
+      })
+    );
   }
 
   private adaptFromApi(data: APICourseEdition[]): CourseEdition[] {

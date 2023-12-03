@@ -22,7 +22,7 @@ import { ENROLL_TEXTS } from './constants/texts.const';
 })
 export class EnrollmentsComponent {
   // public enrollments$: Observable<Enrollment[]>;
-  public editionEnrollments$: Observable<CourseEdition[]>;
+  public editionEnrollments$!: Observable<CourseEdition[]>;
   public students$: Observable<Student[]>;
   public editions$: Observable<CourseEdition[]>;
 
@@ -35,8 +35,9 @@ export class EnrollmentsComponent {
     private router: Router
   ) {
     // this.enrollments$ = this.enrollmentService.getCompleteEditionInformation();
-    this.editionEnrollments$ =
-      this.enrollmentService.getCompleteEditionEnrollments();
+    // this.editionEnrollments$ =
+    //   this.enrollmentService.getCompleteEditionEnrollments();
+    this.asignEnrollments();
     this.students$ = this.studenApiService.getStudents();
     this.editions$ = this.editionApiServeice.getPopulatedEditions();
   }
@@ -61,9 +62,7 @@ export class EnrollmentsComponent {
         next: (data) => {
           if (data) {
             this.enrollmentApiService.addEnrollment(data).subscribe({
-              next: () =>
-                (this.editionEnrollments$ =
-                  this.enrollmentService.getCompleteEditionEnrollments()),
+              next: () => this.asignEnrollments(),
             });
           }
         },
@@ -71,14 +70,25 @@ export class EnrollmentsComponent {
   }
 
   public onAddEnrollment(): void {
-    this.matDialog.open<EnrollmentFormComponent, AddEnrollmentData>(
-      EnrollmentFormComponent,
-      {
-        data: {
-          title: ENROLL_TEXTS.addNewEnrollmentDialogTitle,
+    this.matDialog
+      .open<EnrollmentFormComponent, AddEnrollmentData>(
+        EnrollmentFormComponent,
+        {
+          data: {
+            title: ENROLL_TEXTS.addNewEnrollmentDialogTitle,
+          },
+        }
+      )
+      .afterClosed()
+      .subscribe({
+        next: (enrollment) => {
+          if (enrollment) {
+            this.enrollmentApiService.addEnrollment(enrollment).subscribe({
+              next: () => this.asignEnrollments(),
+            });
+          }
         },
-      }
-    );
+      });
   }
 
   public onDeleteEnrollment(enrollment: Enrollment): void {
@@ -91,9 +101,7 @@ export class EnrollmentsComponent {
             this.enrollmentApiService
               .deleteEnrollment(enrollment.id)
               .subscribe({
-                next: () =>
-                  (this.editionEnrollments$ =
-                    this.enrollmentService.getCompleteEditionEnrollments()),
+                next: () => this.asignEnrollments(),
               });
           }
         },
@@ -108,5 +116,14 @@ export class EnrollmentsComponent {
       Paths.DETAILS,
       editionId,
     ]);
+  }
+
+  public getFilterData(data: CourseEdition[]): CourseEdition[] {
+    return data.filter((d) => d.enrollments && d.enrollments.length > 0);
+  }
+
+  private asignEnrollments(): void {
+    this.editionEnrollments$ =
+      this.enrollmentService.getCompleteEditionEnrollments();
   }
 }

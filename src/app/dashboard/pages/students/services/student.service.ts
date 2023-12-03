@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, map } from 'rxjs';
+import { Observable, combineLatest, forkJoin, map } from 'rxjs';
 import { StudentApiService } from './student-api.service';
 import { BasicEntityService } from 'src/app/core/models/BasicEntityService.model';
 import { Student } from '../models/student.model';
@@ -19,7 +19,7 @@ export class StudentsService implements BasicEntityService {
   }
 
   public getCompleteStudentDetail(studentId: number): Observable<Student> {
-    return forkJoin([
+    return combineLatest([
       this.studentsApiService.getOneStudent(studentId),
       this.enrollmentService.getcompleteEnrollmentInformation(),
     ]).pipe(

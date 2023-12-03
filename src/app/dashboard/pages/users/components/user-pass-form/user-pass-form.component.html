@@ -1,0 +1,51 @@
+<h1 mat-dialog-title>Define a new password</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [type]="hidePass ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePass = !hidePass"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePass"
+        >
+          <mat-icon>{{ hidePass ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error>{{ form | getError : "password" | showError }}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col">
+        <mat-label>Repeat Password</mat-label>
+        <input
+          matInput
+          [type]="hideRepeatPass ? 'password' : 'text'"
+          formControlName="repeatPassword"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hideRepeatPass = !hideRepeatPass"
+          [attr.aria-label]="'Hide repeatPassword'"
+          [attr.aria-pressed]="hideRepeatPass"
+        >
+          <mat-icon>{{
+            hideRepeatPass ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error>{{
+          form | getError : "repeatPassword" | showError
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="submitForm()" cdkFocusInitial>Save</button>
+</div>

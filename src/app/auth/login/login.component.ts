@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
 import { LoginForm, LoginFormControls } from '../models/login-form.model';
 import { AuthService } from '../services/auth.service';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '../store';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,7 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent {
   public form: FormGroup<LoginFormControls>;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private store: Store) {
     this.form = new LoginForm().form;
   }
   /* email: 'admin@admin.com',
@@ -21,17 +23,27 @@ export class LoginComponent {
     if (this.form.invalid) {
       return this.form.markAllAsTouched();
     }
-    this.authService.login(this.form.getRawValue());
+    return this.store.dispatch(
+      AuthActions.loginUser({ data: this.form.getRawValue() })
+    );
+    // this.authService.login(this.form.getRawValue());
   }
 
   public getControlError(control: string): ValidationErrors | null {
     return this.form.get(control)?.errors || null;
   }
 
-  public autoComplete(): void {
-    this.form.patchValue({
-      email: 'admin@admin.com',
-      password: 'admin12345',
-    });
+  public autoComplete(role: 'admin' | 'employee'): void {
+    if (role === 'admin') {
+      this.form.patchValue({
+        email: 'admin@admin.com',
+        password: 'admin12345',
+      });
+    } else {
+      this.form.patchValue({
+        email: 'juan.lopez@eployee.com',
+        password: 'employee12345',
+      });
+    }
   }
 }

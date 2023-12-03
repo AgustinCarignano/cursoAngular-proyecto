@@ -7,6 +7,14 @@
       "lastName": "Carignano",
       "role": "admin",
       "id": 2
+    },
+    {
+      "email": "juan.lopez@eployee.com",
+      "password": "$2a$10$NM6F62QPDL.CvFPvdYf.U.jxQderFmtNDhYo.Lh93ledUjLVnCWZa",
+      "firstName": "Juan",
+      "lastName": "Lopez",
+      "role": "employee",
+      "id": 3
     }
   ],
   "students": [
@@ -373,7 +381,7 @@
   ],
   "courses": [
     {
-      "title": "JavaScript",
+      "title": "JavaScripts",
       "shortDescription": "JavaScript is the programming language that powers the modern web.",
       "description": "JavaScript is the programming language that powers the modern web. In this course, you will learn the basic concepts of web development with JavaScript. You will work with functions, objects, arrays, variables, data types, the HTML DOM, and much more.",
       "imgUrl": "https://img-c.udemycdn.com/course/750x422/3442840_3033.jpg",
@@ -418,7 +426,7 @@
       "shortDescription": "C++ is an object-oriented programming language which gives a clear structure to programs.",
       "description": "C++ is an object-oriented programming language which gives a clear structure to programs and allows code to be reused, lowering development costs. C++ is portable and can be used to develop applications that can be adapted to multiple platforms.",
       "imgUrl": "https://i0.wp.com/imgs.hipertextual.com/wp-content/uploads/2019/05/hipertextual-cursos-online-gratis-aprender-programar-c-2019879376.jpg?fit=1200%2C800&quality=50&strip=all&ssl=1",
-      "available": false
+      "available": true
     },
     {
       "id": 7,
@@ -466,6 +474,13 @@
       "startDate": "2023-12-19T23:00:00.000Z",
       "endDate": "2024-01-30T23:00:00.000Z",
       "id": 3
+    },
+    {
+      "courseId": 1,
+      "professorId": 15,
+      "startDate": "2024-01-07T23:00:00.000Z",
+      "endDate": "2024-01-29T23:00:00.000Z",
+      "id": 4
     }
   ],
   "professors": [
@@ -725,6 +740,26 @@
       "editionId": 1,
       "studentId": 2,
       "id": 5
+    },
+    {
+      "editionId": 1,
+      "studentId": 4,
+      "id": 6
+    },
+    {
+      "editionId": 1,
+      "studentId": 21,
+      "id": 7
+    },
+    {
+      "editionId": 1,
+      "studentId": 30,
+      "id": 8
+    },
+    {
+      "editionId": 5,
+      "studentId": 5,
+      "id": 10
     }
   ]
 }

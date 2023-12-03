@@ -1,27 +1,40 @@
 # CursoAngularProyecto
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+Proyecto del curso de Angular realizado en CoderHouse
 
-## Development server
+## Descripción
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+El proyecto se basa en la creación de una aplicación para la gestión de cursos, alumnos e inscripciones. La aplicación se plantea para uso interno, con un sistema de autenticación y autorización de usuarios.
 
-## Code scaffolding
+Accediendo a la aplicación, en la pantalla de inicio, se muestra un breve resumen de los datos almacenados. En la siguientes vistas se pueden agregar, editar y eliminar usuarios (solo habilitado para administradores), alumnos y profesores, asi como la gestión de cursos, creación de ediciones de cursos con fechas de inicio y fin, y asignando un profesor. Luego, pueden agregarse alumnos a las ediciones de los cursos creadas, tanto desde el detalle de cursos como desde la sección de inscripciones, en la que solo aparecen aquellos cursos que tienen inscripciones previas.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Instrucciones para instalar
 
-## Build
+Clonar el repositorio con el comando
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+git clone https://github.com/AgustinCarignano/cursoAngular-proyecto.git
+```
 
-## Running unit tests
+Instalar dependencias del proyecyo
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+ npm install
+```
 
-## Running end-to-end tests
+El proyecto consume una fake api haciendo uso de json-server. Para correr el proyecto ejecutar
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+npm run api:server
+npm start
+```
 
-## Further help
+para ejecutar los test correr el comando
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+npm run test
+```
+
+## Pruebas del proyecto
+
+Existen dos usuarios ya creados, uno con permisos de "administrador" y otro con permisos de "empleado". Cuando se carga la pantalla de login, se puede hacer uso del botón de ayuda para cargar los datos de cualquiera de estos dos usuarios de prueba.

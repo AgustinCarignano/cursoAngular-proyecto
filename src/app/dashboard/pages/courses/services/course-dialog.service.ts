@@ -5,6 +5,7 @@ import { ConfirmSnackbarComponent } from 'src/app/shared/components/confirm-snac
 import { Course, CourseEdition } from '../models';
 import { CourseFormComponent } from '../components/course-form/course-form.component';
 import { EditionFormComponent } from '../components/edition-form/edition-form.component';
+import { EnrollmentFormComponent } from '../../enrollments/components/enrollment-form/enrollment-form.component';
 
 @Injectable({
   providedIn: 'root',
@@ -43,14 +44,15 @@ export class CourseDialogService {
   }
 
   public openEnrollFormDialog(editionId: number): Observable<any> {
-    // return this.dialog
-    //   .open(EnrollmentFormComponent, {
-    //     data: {
-    //       editionId,
-    //     },
-    //   })
-    //   .afterClosed();
-    return of({});
+    return this.dialog
+      .open(EnrollmentFormComponent, {
+        data: {
+          title: 'New enrollment',
+          editionId,
+        },
+      })
+      .afterClosed();
+    // return of({});
   }
 
   public openConfirmDialog(): Observable<boolean> {

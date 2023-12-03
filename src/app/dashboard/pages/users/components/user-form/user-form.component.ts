@@ -47,6 +47,10 @@ export class UserFormComponent {
   }
 
   public submitForm(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     let userData = this.form.getRawValue() as Partial<User>;
     if (this.data.user) {
       userData = { ...userData, id: this.data.user.id };

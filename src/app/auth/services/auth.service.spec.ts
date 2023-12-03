@@ -5,29 +5,22 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import {
-  RouterTestingHarness,
-  RouterTestingModule,
-} from '@angular/router/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MockProvider } from 'ng-mocks';
 import { Router } from '@angular/router';
-import { User } from 'src/app/dashboard/pages/users/models/user.model';
 import { UserRole } from 'src/app/dashboard/pages/users/enums/user-role.enum';
-import {
-  AuthResponse,
-  LoginRequest,
-  RegisterRequest,
-} from '../models/auth-user.model';
+import { AuthResponse, LoginRequest } from '../models/auth-user.model';
 import { environment } from 'src/environments/environment.local';
 import { Paths } from 'src/app/dashboard/enums/paths.enum';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { State as LoginState, initialState } from '../store';
 
 describe('AuthService', () => {
-  const mockAuthResopnse: AuthResponse = {
+  const mockAuthResponse: AuthResponse = {
     accessToken: 'lkasialmknsfdasf',
     user: {
       id: 1,
       email: 'admin@admin.com',
-      password: 'someTokenizadePassword',
       firstName: 'fakeName',
       lastName: 'fakeSurname',
       role: UserRole.EMPLOYEE,
@@ -37,21 +30,17 @@ describe('AuthService', () => {
     email: 'admin@MatListItem.com',
     password: '12345',
   };
-  const registerDataMock: RegisterRequest = {
-    email: 'admin@admin.com',
-    password: 'admin123',
-    firstName: 'fakeName',
-    lastName: 'fakeSurname',
-  };
   let service: AuthService;
+  let store: MockStore<LoginState>;
   let httpController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
-      providers: [MockProvider(Router)],
+      providers: [MockProvider(Router), provideMockStore({ initialState })],
     });
     service = TestBed.inject(AuthService);
+    store = TestBed.inject(MockStore);
     httpController = TestBed.inject(HttpTestingController);
   });
 
@@ -59,28 +48,7 @@ describe('AuthService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('Should record the user information when the register method is called and navigate to dashboard path', () => {
-    let spyOnRouterNavigate = spyOn(service['router'], 'navigate');
-    service.register(registerDataMock);
-    httpController
-      .expectOne({
-        url: environment.baseUrl + '/register',
-        method: 'POST',
-      })
-      .flush(mockAuthResopnse);
-
-    service.localStorageInfo.subscribe({
-      next: (data) => {
-        expect(data).toEqual({
-          accessToken: mockAuthResopnse.accessToken,
-          user: { email: mockAuthResopnse.user.email },
-        });
-        expect(spyOnRouterNavigate).toHaveBeenCalledWith([Paths.DASHBOARD]);
-      },
-    });
-  });
-
-  it('Should record the user information when the login method is called and navigate to dashboard path', () => {
+  it('Should navigate to dashboard path when the login method is called with a valid user', () => {
     let spyOnRouterNavigate = spyOn(service['router'], 'navigate');
     service.login(loginDataMock);
     httpController
@@ -88,26 +56,25 @@ describe('AuthService', () => {
         url: environment.baseUrl + '/login',
         method: 'POST',
       })
-      .flush(mockAuthResopnse);
-
-    service.localStorageInfo.subscribe({
-      next: (data) => {
-        expect(data).toEqual({
-          accessToken: mockAuthResopnse.accessToken,
-          user: { email: mockAuthResopnse.user.email },
-        });
-        expect(spyOnRouterNavigate).toHaveBeenCalledWith([Paths.DASHBOARD]);
-      },
-    });
+      .flush(mockAuthResponse);
+    expect(spyOnRouterNavigate).toHaveBeenCalledWith([Paths.DASHBOARD]);
   });
 
-  it('Should record a null value when call logout method', () => {
-    service.logout();
+  it('should set the authResponse in the localStorage when login is success', () => {
+    service.login(loginDataMock);
+    httpController
+      .expectOne({
+        url: environment.baseUrl + '/login',
+        method: 'POST',
+      })
+      .flush(mockAuthResponse);
+    expect(JSON.parse(localStorage.getItem('loggedUser') || '')).toEqual(
+      mockAuthResponse
+    );
+  });
 
-    service.localStorageInfo.subscribe({
-      next: (data) => {
-        expect(data).toBe(null);
-      },
-    });
+  it('should clean the localStorage when call logout method', () => {
+    service.logout();
+    expect(localStorage.getItem('loggedUser')).toBe(null);
   });
 });

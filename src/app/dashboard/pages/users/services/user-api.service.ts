@@ -2,6 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { HttpService } from 'src/app/core/services/http.service';
 import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment.local';
+import { delay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class UserApiService extends HttpService<User> {
   }
 
   public getUsers() {
-    return this.getAll();
+    return this.getAll().pipe(delay(1000));
   }
 
   public getUser(userId: number) {
