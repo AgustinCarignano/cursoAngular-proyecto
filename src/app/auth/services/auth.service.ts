@@ -9,10 +9,7 @@ import {
 import { UserRole } from 'src/app/dashboard/pages/users/enums/user-role.enum';
 import { Router } from '@angular/router';
 import { Paths } from 'src/app/dashboard/enums/paths.enum';
-import {
-  PublicUser,
-  User,
-} from 'src/app/dashboard/pages/users/models/user.model';
+import { User } from 'src/app/dashboard/pages/users/models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +22,7 @@ export class AuthService {
   public localStorageInfo: Observable<AuthResponse | null> =
     this._localStorageInfo.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {
-    // this.checkSession();
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   public storeLogin(data: LoginRequest): Observable<AuthResponse> {
     return this.http
@@ -88,12 +83,10 @@ export class AuthService {
 
   public getTokenvalue(): string {
     return localStorage.getItem(this.storageName) || '';
-    return this._localStorageInfo.getValue()?.accessToken || '';
   }
 
   private openSession(info: AuthResponse): void {
     localStorage.setItem(this.storageName, JSON.stringify(info));
-    // this._localStorageInfo.next(info);
     this.router.navigate([Paths.DASHBOARD]);
   }
 
@@ -113,7 +106,5 @@ export class AuthService {
 
   private destroySession(): void {
     localStorage.removeItem(this.storageName);
-    // this.router.createUrlTree([Paths.AUTH]);
-    // this._localStorageInfo.next(null);
   }
 }

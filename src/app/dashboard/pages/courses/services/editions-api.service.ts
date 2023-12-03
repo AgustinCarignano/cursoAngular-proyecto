@@ -57,7 +57,6 @@ export class EditionsApiService extends HttpService<APICourseEdition> {
   }
 
   deleteCourseEdition(editionId: number): Observable<CourseEdition[]> {
-    console.log('llamando a borrar una edicion');
     return this.delete(editionId).pipe(
       tap(() =>
         this.enrollmentApiService.deleteEnrollmentByEditionId(editionId)

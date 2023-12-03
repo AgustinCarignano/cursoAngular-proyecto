@@ -36,36 +36,6 @@ export class HomeComponent {
     private professorservice: ProfessorsService
   ) {}
 
-  // public getCourseData(): Observable<HomeCardData> {
-  //   return (this.coursesData$ = this.courseService.getCoursesQuantity().pipe(
-  //     map((q) => ({
-  //       title: HomeCardText.COURSE_TITLE,
-  //       content: q,
-  //       BbtnLink: ['', Paths.DASHBOARD, Paths.COURSES],
-  //     }))
-  //   ));
-  // }
-
-  // public getStudentData(): Observable<HomeCardData> {
-  //   return this.studentService.getStudentsQuantity().pipe(
-  //     map((q) => ({
-  //       title: HomeCardText.STUDENT_TITLE,
-  //       content: q,
-  //       BbtnLink: ['', Paths.DASHBOARD, Paths.STUDENTS],
-  //     }))
-  //   );
-  // }
-
-  // public getProfessorData(): Observable<HomeCardData> {
-  //   return this.professorservice.getProfessorsQuantity().pipe(
-  //     map((q) => ({
-  //       title: HomeCardText.PROFESOR_TITLE,
-  //       content: q,
-  //       BbtnLink: ['', Paths.DASHBOARD, Paths.PROFESORS],
-  //     }))
-  //   );
-  // }
-
   private getData(
     service: BasicEntityService,
     title: HomeCardText,

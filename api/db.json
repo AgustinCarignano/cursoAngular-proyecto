@@ -469,13 +469,6 @@
       "id": 2
     },
     {
-      "courseId": 2,
-      "professorId": 19,
-      "startDate": "2023-12-19T23:00:00.000Z",
-      "endDate": "2024-01-30T23:00:00.000Z",
-      "id": 3
-    },
-    {
       "courseId": 1,
       "professorId": 15,
       "startDate": "2024-01-07T23:00:00.000Z",
@@ -755,11 +748,6 @@
       "editionId": 1,
       "studentId": 30,
       "id": 8
-    },
-    {
-      "editionId": 5,
-      "studentId": 5,
-      "id": 10
     }
   ]
 }

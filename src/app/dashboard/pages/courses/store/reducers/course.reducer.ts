@@ -47,8 +47,3 @@ export const courseReducer = createReducer(
   on(CourseActions.deleteCourse, (state) => ({ ...state, isLoading: true })),
   on(CourseActions.cleanCourseState, () => initialCourseState)
 );
-
-// export const courseFeature = createFeature({
-//   name: courseFeatureKey,
-//   reducer,
-// });

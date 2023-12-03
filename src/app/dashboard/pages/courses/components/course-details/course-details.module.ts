@@ -14,6 +14,5 @@ import { MatCardModule } from '@angular/material/card';
     SharedModule,
     MatCardModule,
   ],
-  // providers: [CourseDialogService],
 })
 export class CourseDetailsModule {}

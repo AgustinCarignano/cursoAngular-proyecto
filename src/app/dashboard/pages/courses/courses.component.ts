@@ -24,19 +24,16 @@ export class CoursesComponent implements OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
 
   constructor(
-    // private courseApiService: CourseApiService,
     private store: Store,
     private dialogService: CourseDialogService,
     private notificationService: NotificationService
   ) {
-    // this.store.dispatch(CourseActions.loadCourses());
     this.courses$ = this.store.select(selectCourses).pipe(
       distinctUntilChanged(),
       tap((courses) => {
         if (!courses) this.store.dispatch(CourseActions.loadCourses());
       })
     );
-    // this.courses$ = this.courseApiService.getCourses();
   }
 
   public newCourse(): void {
@@ -47,7 +44,6 @@ export class CoursesComponent implements OnDestroy {
         next: (course) => {
           if (course) {
             this.store.dispatch(CourseActions.createCourse({ course }));
-            // this.courses$ = this.courseApiService.createCourse(data);
             this.notificationService.showNotification(
               ActionsMessages.addedCourse
             );
@@ -57,20 +53,16 @@ export class CoursesComponent implements OnDestroy {
   }
 
   public editCourse(course: Course): void {
-    this.dialogService
-      .openFormDialog('Edit course', course)
-      // .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (course) => {
-          if (course) {
-            this.store.dispatch(CourseActions.updateCourse({ course }));
-            // this.courses$ = this.courseApiService.updateCourse(data);
-            this.notificationService.showNotification(
-              ActionsMessages.editedCourse
-            );
-          }
-        },
-      });
+    this.dialogService.openFormDialog('Edit course', course).subscribe({
+      next: (course) => {
+        if (course) {
+          this.store.dispatch(CourseActions.updateCourse({ course }));
+          this.notificationService.showNotification(
+            ActionsMessages.editedCourse
+          );
+        }
+      },
+    });
   }
 
   public deleteCourse(courseId: number): void {

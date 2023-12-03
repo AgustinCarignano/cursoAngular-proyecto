@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Professor } from '../../models';
 import { ActivatedRoute } from '@angular/router';
-import { ProfessorsApiService } from '../../services/professors-api.service';
-import { ProfessorsService } from '../../services/professors.service';
 import { BreadCrumb } from 'src/app/shared/models/breadcrumb.model';
 import { Paths } from 'src/app/dashboard/enums/paths.enum';
+import { Store } from '@ngrx/store';
+import { ProfessorActions, selectOneProfessor } from '../../store';
 
 @Component({
   selector: 'app-professor-detail',
@@ -13,7 +13,7 @@ import { Paths } from 'src/app/dashboard/enums/paths.enum';
   styleUrls: ['./professor-detail.component.scss'],
 })
 export class ProfessorDetailComponent {
-  public professor$?: Observable<Professor>;
+  public professor$: Observable<Professor | null>;
   public pagetitle = 'Professor details';
   public breadcrumbs: BreadCrumb[] = [
     {
@@ -22,16 +22,12 @@ export class ProfessorDetailComponent {
     },
     { label: 'Details', path: '' },
   ];
-  constructor(
-    private router: ActivatedRoute,
-    private professorApiService: ProfessorsApiService,
-    private professorService: ProfessorsService
-  ) {
+  constructor(private router: ActivatedRoute, private store: Store) {
     const id: string = this.router.snapshot.params['id'];
     if (id)
-      this.professor$ = this.professorService.getCompleteProfessorDetail(
-        Number(id)
+      this.store.dispatch(
+        ProfessorActions.loadProfessor({ professorId: Number(id) })
       );
-    // this.professor$ = this.professorApiService.getOneProfessor(Number(id));
+    this.professor$ = this.store.select(selectOneProfessor);
   }
 }

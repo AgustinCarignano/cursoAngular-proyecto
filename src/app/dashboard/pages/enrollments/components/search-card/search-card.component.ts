@@ -55,7 +55,6 @@ export class SearchCardComponent {
       return this.form.markAllAsTouched();
     }
     console.log(this.form.get(filterBy)?.value);
-    // this.search.emit(this.form.getRawValue());
   }
 
   public displayEditionFn(id?: number) {

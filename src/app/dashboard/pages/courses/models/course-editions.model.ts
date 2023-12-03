@@ -14,10 +14,6 @@ export interface ICourseEdition {
   enrollments?: Enrollment[];
 }
 
-// export interface ICourseEditionPopulated extends ICourseEdition {
-//   course: Course;
-// }
-
 export class CourseEdition implements ICourseEdition {
   id: number;
   courseId: number;
@@ -39,15 +35,3 @@ export class CourseEdition implements ICourseEdition {
     this.enrollments = data.enrollments;
   }
 }
-
-// export class CourseEditionPopulated
-//   extends CourseEdition
-//   implements ICourseEditionPopulated
-// {
-//   course: Course;
-
-//   constructor(data: IAPICourseEditionPopulated) {
-//     super(data);
-//     this.course = data.course;
-//   }
-// }

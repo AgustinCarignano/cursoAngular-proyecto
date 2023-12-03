@@ -21,29 +21,15 @@ import { ENROLL_TEXTS } from './constants/texts.const';
   styleUrls: ['./enrollments.component.scss'],
 })
 export class EnrollmentsComponent {
-  // public enrollments$: Observable<Enrollment[]>;
   public editionEnrollments$!: Observable<CourseEdition[]>;
-  public students$: Observable<Student[]>;
-  public editions$: Observable<CourseEdition[]>;
 
   constructor(
     private enrollmentApiService: EnrollmentApiService,
-    private studenApiService: StudentApiService,
-    private editionApiServeice: EditionsApiService,
     private enrollmentService: EnrollmentService,
     private matDialog: MatDialog,
     private router: Router
   ) {
-    // this.enrollments$ = this.enrollmentService.getCompleteEditionInformation();
-    // this.editionEnrollments$ =
-    //   this.enrollmentService.getCompleteEditionEnrollments();
     this.asignEnrollments();
-    this.students$ = this.studenApiService.getStudents();
-    this.editions$ = this.editionApiServeice.getPopulatedEditions();
-  }
-
-  onSearch(data: SearchEnrollment): void {
-    console.log(data);
   }
 
   onAddStudent(editionId: number): void {

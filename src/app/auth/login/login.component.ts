@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
 import { LoginForm, LoginFormControls } from '../models/login-form.model';
-import { AuthService } from '../services/auth.service';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../store';
 
@@ -13,11 +12,9 @@ import { AuthActions } from '../store';
 export class LoginComponent {
   public form: FormGroup<LoginFormControls>;
 
-  constructor(private authService: AuthService, private store: Store) {
+  constructor(private store: Store) {
     this.form = new LoginForm().form;
   }
-  /* email: 'admin@admin.com',
-      password: 'admin12345', */
 
   public onLogin(): void {
     if (this.form.invalid) {
@@ -26,7 +23,6 @@ export class LoginComponent {
     return this.store.dispatch(
       AuthActions.loginUser({ data: this.form.getRawValue() })
     );
-    // this.authService.login(this.form.getRawValue());
   }
 
   public getControlError(control: string): ValidationErrors | null {

@@ -8,7 +8,6 @@ export class AgePipe implements PipeTransform {
   private factor = 1000 * 60 * 60 * 24 * 365.25;
 
   transform(value: Date): number {
-    console.log(value);
     return Math.floor((this.now - value.getTime()) / this.factor);
   }
 }

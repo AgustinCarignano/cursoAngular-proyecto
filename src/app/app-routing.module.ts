@@ -26,8 +26,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       useHash: true,
-      // initialNavigation: 'enabledNonBlocking',
-      // paramsInheritanceStrategy: 'always',
     }),
   ],
   exports: [RouterModule],

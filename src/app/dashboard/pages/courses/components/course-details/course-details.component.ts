@@ -50,7 +50,6 @@ export class CourseDetailsComponent implements OnDestroy {
     this.course$ = this.store
       .select(selectCourse)
       .pipe(takeUntil(this.destroy$));
-    // this.course$ = this.courseApiService.getOneCourse(this.editionId);
     this.asignEditions();
     this.professors$ = this.profesorApiService.getProfessors();
   }
@@ -61,7 +60,6 @@ export class CourseDetailsComponent implements OnDestroy {
       .subscribe({
         next: (edition) => {
           if (edition) {
-            // this.store.dispatch(EditionActions.createEdition({ edition }));
             this.editionApiService
               .createCourseEdition(edition)
               .pipe(takeUntil(this.destroy$))
@@ -74,13 +72,12 @@ export class CourseDetailsComponent implements OnDestroy {
 
   public editEdition(course: CourseEdition): void {
     this.courseDialogService
-      .openEditionFormDialog('Edit course edition', course.id, course)
+      .openEditionFormDialog('Edit course edition', course.courseId, course)
       .subscribe({
         next: (edition) => {
           if (edition) {
-            // this.store.dispatch(EditionActions.updateEdition({ edition }));
             this.editionApiService
-              .editCourseEdition(edition)
+              .editCourseEdition({ ...edition, id: course.id })
               .pipe(takeUntil(this.destroy$))
               .subscribe();
             this.asignEditions();
@@ -93,7 +90,6 @@ export class CourseDetailsComponent implements OnDestroy {
     this.courseDialogService.openConfirmDialog().subscribe({
       next: (resp) => {
         if (resp) {
-          // this.store.dispatch(EditionActions.deleteEdition({ editionId }));
           this.editionApiService
             .deleteCourseEdition(editionId)
             .pipe(takeUntil(this.destroy$))

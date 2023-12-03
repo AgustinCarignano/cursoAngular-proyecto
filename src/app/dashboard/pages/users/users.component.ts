@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmSnackbarComponent } from 'src/app/shared/components/confirm-snackbar/confirm-snackbar.component';
 import { UserDialogService } from './services/user-dialog.service';
 import { Store } from '@ngrx/store';
-import { UserActions, selectOneUser, selectUsers } from './store';
+import { UserActions, selectUsers } from './store';
 import { selectAuthUser } from 'src/app/auth/store/auth.selectors';
 
 @Component({

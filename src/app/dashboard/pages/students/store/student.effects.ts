@@ -20,7 +20,7 @@ export class StudentEffects {
   loadStudents$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(StudentActions.loadStudents),
-      concatMap(() =>
+      switchMap(() =>
         this.studentApiService.getStudents().pipe(
           map((data) => StudentActions.loadStudentsSuccess({ data })),
           catchError((error) =>
@@ -48,7 +48,7 @@ export class StudentEffects {
   addStudent$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(StudentActions.createStudent),
-      concatMap(({ student }) =>
+      switchMap(({ student }) =>
         this.studentApiService.createStudent(student).pipe(
           map((data) => StudentActions.loadStudentsSuccess({ data })),
           catchError((error) =>
@@ -62,7 +62,7 @@ export class StudentEffects {
   updateStudent$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(StudentActions.updateStudent),
-      concatMap(({ student }) =>
+      switchMap(({ student }) =>
         this.studentApiService.updateStudent(student).pipe(
           map((data) => StudentActions.loadStudentsSuccess({ data })),
           catchError((error) =>
@@ -76,7 +76,7 @@ export class StudentEffects {
   deleteStudent$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(StudentActions.deleteStudent),
-      concatMap(({ studentId }) =>
+      switchMap(({ studentId }) =>
         this.studentApiService.deleteStudent(studentId).pipe(
           map((data) => StudentActions.loadStudentsSuccess({ data })),
           catchError((error) =>

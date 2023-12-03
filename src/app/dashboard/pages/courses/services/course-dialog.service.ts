@@ -52,7 +52,6 @@ export class CourseDialogService {
         },
       })
       .afterClosed();
-    // return of({});
   }
 
   public openConfirmDialog(): Observable<boolean> {

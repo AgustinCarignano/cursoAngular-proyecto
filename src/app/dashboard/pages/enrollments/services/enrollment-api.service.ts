@@ -37,7 +37,6 @@ export class EnrollmentApiService extends HttpService<Enrollment> {
   }
 
   public deleteEnrollmentByEditionId(editionId: number) {
-    console.log('llamando a borrar una inscripcion');
     return this.getAll(`editionId=${editionId}`).pipe(
       concatMap((enrollments) =>
         forkJoin(enrollments.map((e) => this.deleteEnrollment(e.id)))

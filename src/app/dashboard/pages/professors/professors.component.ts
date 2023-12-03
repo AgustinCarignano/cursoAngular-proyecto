@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Professor } from './models';
-import { ProfessorsApiService } from './services/professors-api.service';
 import { PersonDialogService } from '../../commons/person/services/person-dialog.service';
 import { PersonForm } from '../../commons/person/models/person-form.model';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ActionsMessages } from 'src/app/core/enums/messages';
+import { Store } from '@ngrx/store';
+import { ProfessorActions, selectProfessors } from './store';
 
 @Component({
   selector: 'app-professors',
@@ -15,23 +16,26 @@ import { ActionsMessages } from 'src/app/core/enums/messages';
 export class ProfessorsComponent {
   public pageTitle = 'Professors list';
   public buttonLabel = 'new professor';
-  public professors$: Observable<Professor[]>;
+  public professors$: Observable<Professor[] | null>;
 
   constructor(
-    private professorsApiService: ProfessorsApiService,
     private dialogService: PersonDialogService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private store: Store
   ) {
-    this.professors$ = this.professorsApiService.getProfessors();
+    this.store.dispatch(ProfessorActions.loadProfessors());
+    this.professors$ = this.store.select(selectProfessors);
   }
 
   public newProfessor(): void {
     this.dialogService
       .openFormDialog('New professor', new PersonForm().form)
       .subscribe({
-        next: (data) => {
-          if (data) {
-            this.professors$ = this.professorsApiService.createProfessor(data);
+        next: (professor) => {
+          if (professor) {
+            this.store.dispatch(
+              ProfessorActions.createProfessor({ professor })
+            );
             this.notificationService.showNotification(
               ActionsMessages.addedProfessor
             );
@@ -41,7 +45,6 @@ export class ProfessorsComponent {
   }
 
   public editProfessor(professor: Professor): void {
-    console.log(professor);
     this.dialogService
       .openFormDialog(
         'New professor',
@@ -49,9 +52,11 @@ export class ProfessorsComponent {
         professor
       )
       .subscribe({
-        next: (data) => {
-          if (data) {
-            this.professors$ = this.professorsApiService.updateProfessor(data);
+        next: (professor) => {
+          if (professor) {
+            this.store.dispatch(
+              ProfessorActions.updateProfessor({ professor })
+            );
             this.notificationService.showNotification(
               ActionsMessages.editedProfessor
             );
@@ -64,8 +69,9 @@ export class ProfessorsComponent {
     this.dialogService.openConfirmDialog().subscribe({
       next: (resp) => {
         if (resp) {
-          this.professors$ =
-            this.professorsApiService.deleteProfessor(professorId);
+          this.store.dispatch(
+            ProfessorActions.deleteProfessor({ professorId })
+          );
           this.notificationService.showNotification(
             ActionsMessages.deletedProfessor
           );

@@ -6,11 +6,6 @@ export interface AddEnrollmentControls {
   studentId: FormControl<number | null>;
 }
 
-// export interface AddEnrollmentRequest {
-//   editionId: number|null
-//   studentId: number|null
-// }
-
 export class AddEnrollmentForm implements AddEnrollmentControls {
   editionId: FormControl<number | null> = new FormControl<number | null>(null, [
     Validators.required,

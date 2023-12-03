@@ -8,7 +8,3 @@ export interface Enrollment {
   student?: Student;
   edition?: CourseEdition;
 }
-
-// export interface PopulatedEnrollment extends Enrollment {
-
-// }

@@ -4,10 +4,6 @@
     <mat-icon>add</mat-icon>{{ "New Enrollment" | titlecase }}
   </button>
 </div>
-<app-search-card
-  [editions]="(editions$ | async) || []"
-  [students]="(students$ | async) || []"
-></app-search-card>
 <ng-container *ngIf="editionEnrollments$ | async as data">
   <app-enrollment-table
     [dataSource]="getFilterData(data)"

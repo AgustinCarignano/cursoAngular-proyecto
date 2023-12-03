@@ -1,16 +1,16 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { PublicUser, User } from '../../models/user.model';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { User } from '../../models/user.model';
 import { UserRole } from '../../enums/user-role.enum';
 import { Store } from '@ngrx/store';
 import { selectAuthUser } from 'src/app/auth/store/auth.selectors';
-import { Observable, take } from 'rxjs';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-user-table',
   templateUrl: './user-table.component.html',
   styleUrls: ['./user-table.component.scss'],
 })
-export class UserTableComponent implements OnInit {
+export class UserTableComponent {
   @Input() dataSource!: User[];
   @Output() onEdit: EventEmitter<User> = new EventEmitter();
   @Output() onDelete: EventEmitter<number> = new EventEmitter();
@@ -27,10 +27,6 @@ export class UserTableComponent implements OnInit {
           }
         },
       });
-  }
-
-  ngOnInit(): void {
-    console.log('init');
   }
 
   public editUser(user: User): void {
