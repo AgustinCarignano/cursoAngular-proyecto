@@ -9,6 +9,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromAuth from './auth/store';
 import { AuthEffects } from './auth/store/auth.effects';
+import { CalendarModule } from 'angular-calendar';
 
 @NgModule({
   declarations: [AppComponent],

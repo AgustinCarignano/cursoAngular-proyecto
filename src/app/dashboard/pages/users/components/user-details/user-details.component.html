@@ -27,10 +27,20 @@
       </div>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-button (click)="editBasicInformation(user)">
+      <button
+        mat-button
+        (click)="editBasicInformation(user)"
+        [disabled]="user.id === 2 || user.id === 3"
+      >
         Edit basic information
       </button>
-      <button mat-button (click)="changePassword(user)">Change password</button>
+      <button
+        mat-button
+        (click)="changePassword(user)"
+        [disabled]="user.id === 2 || user.id === 3"
+      >
+        Change password
+      </button>
       <button
         mat-button
         color="warn"

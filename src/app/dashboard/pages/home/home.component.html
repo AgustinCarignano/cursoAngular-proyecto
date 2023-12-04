@@ -1,4 +1,4 @@
-<div class="container m-4 d-flex justify-content-around">
+<div class="container p-4 d-flex justify-content-around">
   <div>
     <app-home-card
       *ngIf="coursesData$ | async as data"
@@ -18,4 +18,44 @@
     ></app-home-card>
   </div>
 </div>
-<div>(TODO - calendar)</div>
+<h1 appTitle class="title">course calendar</h1>
+<div class="controls">
+  <button mat-icon-button color="primary" (click)="changeMonth('back')">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <button mat-button [matMenuTriggerFor]="months">
+    {{ viewDate | date : "MMMM" }}
+  </button>
+  <mat-menu #months="matMenu">
+    <button
+      mat-menu-item
+      *ngFor="let month of monthsList"
+      (click)="setNewMonth(month.number)"
+    >
+      {{ month.name }}
+    </button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="years">
+    {{ viewDate | date : "yyyy" }}
+  </button>
+  <mat-menu #years="matMenu">
+    <button
+      mat-menu-item
+      *ngFor="let year of yearsList"
+      (click)="setNewYear(year)"
+    >
+      {{ year }}
+    </button>
+  </mat-menu>
+  <button mat-icon-button color="primary" (click)="changeMonth('next')">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>
+<ng-container *ngIf="events$ | async as events">
+  <mwl-calendar-month-view
+    class="container"
+    [viewDate]="viewDate"
+    [events]="events"
+  >
+  </mwl-calendar-month-view>
+</ng-container>
