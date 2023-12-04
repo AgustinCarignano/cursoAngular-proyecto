@@ -1,25 +1,31 @@
 <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-<app-person-detail
-  *ngIf="student$ | async as student"
-  [person]="student"
-  [title]="pageTitle"
->
-  <ng-container
-    *ngIf="
-      student.enrollments && student.enrollments.length > 0;
-      else emptyList
-    "
+<ng-container *ngIf="!(isLoading$ | async); else loading">
+  <app-person-detail
+    *ngIf="student$ | async as student"
+    [person]="student"
+    [title]="pageTitle"
   >
-    <div *ngFor="let enrollment of student.enrollments">
-      <ng-container *ngIf="enrollment.edition">
-        {{ enrollment.edition | relatedCourses }}
-      </ng-container>
-    </div>
-  </ng-container>
-</app-person-detail>
+    <ng-container
+      *ngIf="
+        student.enrollments && student.enrollments.length > 0;
+        else emptyList
+      "
+    >
+      <div *ngFor="let enrollment of student.enrollments">
+        <ng-container *ngIf="enrollment.edition">
+          {{ enrollment.edition | relatedCourses }}
+        </ng-container>
+      </div>
+    </ng-container>
+  </app-person-detail>
+</ng-container>
 
 <ng-template #emptyList>
   <app-empty-state
     [message]="'There are no courses for this student.'"
   ></app-empty-state>
+</ng-template>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
 </ng-template>

@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import { Student } from './models/student.model';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ActionsMessages } from '../../../core/enums/messages';
-import { StudentApiService } from './services/student-api.service';
 import { PersonDialogService } from '../../commons/person/services/person-dialog.service';
 import { StudentForm } from './models/student-form.model';
 import { Store } from '@ngrx/store';
-import { StudentActions, selectStudents } from './store';
+import {
+  StudentActions,
+  selectIsLoadingStudents,
+  selectStudents,
+} from './store';
 
 @Component({
   selector: 'app-students',
@@ -16,6 +19,7 @@ import { StudentActions, selectStudents } from './store';
 })
 export class StudentsComponent {
   public students$: Observable<Student[] | null>;
+  public isLoading$: Observable<boolean>;
   public buttonLabel = 'new student';
   public pageTitle = 'Student List';
 
@@ -24,8 +28,12 @@ export class StudentsComponent {
     private notificationService: NotificationService,
     private store: Store
   ) {
-    this.store.dispatch(StudentActions.loadStudents());
-    this.students$ = this.store.select(selectStudents);
+    this.students$ = this.store.select(selectStudents).pipe(
+      tap((students) => {
+        if (!students) this.store.dispatch(StudentActions.loadStudents());
+      })
+    );
+    this.isLoading$ = this.store.select(selectIsLoadingStudents);
   }
 
   public newStudent(): void {

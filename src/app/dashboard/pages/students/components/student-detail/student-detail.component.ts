@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Student } from '../../models/student.model';
 import { Store } from '@ngrx/store';
-import { StudentActions, selectOneStudent } from '../../store';
+import {
+  StudentActions,
+  selectIsLoadingStudents,
+  selectOneStudent,
+} from '../../store';
 import { BreadCrumb } from 'src/app/shared/models/breadcrumb.model';
 import { Paths } from 'src/app/dashboard/enums/paths.enum';
 
@@ -14,6 +18,7 @@ import { Paths } from 'src/app/dashboard/enums/paths.enum';
 })
 export class StudentDetailComponent {
   public student$?: Observable<Student | null>;
+  public isLoading$: Observable<boolean>;
   public pageTitle = 'Student details';
   public breadcrumbs: BreadCrumb[] = [
     { label: 'Students', path: [Paths.ROOT, Paths.DASHBOARD, Paths.STUDENTS] },
@@ -27,5 +32,6 @@ export class StudentDetailComponent {
         StudentActions.loadStudent({ studentId: Number(id) })
       );
     this.student$ = this.store.select(selectOneStudent);
+    this.isLoading$ = this.store.select(selectIsLoadingStudents);
   }
 }

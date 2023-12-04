@@ -10,9 +10,8 @@ import { Course } from './models';
 import { CourseDialogService } from './services/course-dialog.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ActionsMessages } from 'src/app/core/enums/messages';
-import { CourseApiService } from './services/course-api.service';
 import { Store } from '@ngrx/store';
-import { CourseActions, selectCourses } from './store';
+import { CourseActions, selectCourses, selectIsLoadingCourses } from './store';
 
 @Component({
   selector: 'app-courses',
@@ -21,6 +20,7 @@ import { CourseActions, selectCourses } from './store';
 })
 export class CoursesComponent implements OnDestroy {
   public courses$: Observable<Course[] | null>;
+  public isLoading$: Observable<boolean>;
   private readonly destroy$: Subject<void> = new Subject();
 
   constructor(
@@ -34,6 +34,7 @@ export class CoursesComponent implements OnDestroy {
         if (!courses) this.store.dispatch(CourseActions.loadCourses());
       })
     );
+    this.isLoading$ = this.store.select(selectIsLoadingCourses);
   }
 
   public newCourse(): void {

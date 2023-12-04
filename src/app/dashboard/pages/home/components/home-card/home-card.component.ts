@@ -8,4 +8,5 @@ import { HomeCardData } from '../../models/home-card.model';
 })
 export class HomeCardComponent {
   @Input() public data!: HomeCardData;
+  @Input() public isLoading!: boolean;
 }

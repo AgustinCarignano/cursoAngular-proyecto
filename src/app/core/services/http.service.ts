@@ -1,6 +1,14 @@
 import { Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, tap, concatMap, catchError, throwError } from 'rxjs';
+import {
+  Observable,
+  map,
+  tap,
+  concatMap,
+  catchError,
+  throwError,
+  delay,
+} from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ErrorService } from './error.service';
 import { Store } from '@ngrx/store';
@@ -96,8 +104,9 @@ export abstract class HttpService<T> {
   }
 
   private getHeaders(): Observable<{ Authorization: string }> {
-    return this.store
-      .select(selectAuthInfo)
-      .pipe(map((info) => ({ Authorization: 'Bearer ' + info?.accessToken })));
+    return this.store.select(selectAuthInfo).pipe(
+      map((info) => ({ Authorization: 'Bearer ' + info?.accessToken })),
+      delay(800)
+    );
   }
 }

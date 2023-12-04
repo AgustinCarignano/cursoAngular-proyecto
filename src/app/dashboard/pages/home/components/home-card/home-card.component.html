@@ -1,9 +1,19 @@
 <mat-card class="card">
-  <mat-card-header>
-    <mat-card-title>{{ data.title }}</mat-card-title>
-    <mat-card-subtitle class="fs-2 mt-3">{{ data.content }}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-actions align="end">
-    <a mat-button [routerLink]="data.BbtnLink">SEE ALL</a>
-  </mat-card-actions>
+  <ng-container *ngIf="!isLoading; else loading">
+    <mat-card-header>
+      <mat-card-title>{{ data.title }}</mat-card-title>
+      <mat-card-subtitle class="fs-2 mt-3">{{
+        data.content
+      }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions align="end">
+      <a mat-button [routerLink]="data.BbtnLink">SEE ALL</a>
+    </mat-card-actions>
+  </ng-container>
 </mat-card>
+
+<ng-template #loading>
+  <div class="mt-5">
+    <mat-spinner class="m-auto" diameter="20"></mat-spinner>
+  </div>
+</ng-template>

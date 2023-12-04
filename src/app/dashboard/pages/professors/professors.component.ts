@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Professor } from './models';
 import { PersonDialogService } from '../../commons/person/services/person-dialog.service';
 import { PersonForm } from '../../commons/person/models/person-form.model';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ActionsMessages } from 'src/app/core/enums/messages';
 import { Store } from '@ngrx/store';
-import { ProfessorActions, selectProfessors } from './store';
+import {
+  ProfessorActions,
+  selectIsLoadingProfessors,
+  selectProfessors,
+} from './store';
 
 @Component({
   selector: 'app-professors',
@@ -17,14 +21,19 @@ export class ProfessorsComponent {
   public pageTitle = 'Professors list';
   public buttonLabel = 'new professor';
   public professors$: Observable<Professor[] | null>;
+  public isLoading$: Observable<boolean>;
 
   constructor(
     private dialogService: PersonDialogService,
     private notificationService: NotificationService,
     private store: Store
   ) {
-    this.store.dispatch(ProfessorActions.loadProfessors());
-    this.professors$ = this.store.select(selectProfessors);
+    this.professors$ = this.store.select(selectProfessors).pipe(
+      tap((professors) => {
+        if (!professors) this.store.dispatch(ProfessorActions.loadProfessors());
+      })
+    );
+    this.isLoading$ = this.store.select(selectIsLoadingProfessors);
   }
 
   public newProfessor(): void {

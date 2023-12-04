@@ -7,7 +7,11 @@ import { CourseDialogService } from '../../services/course-dialog.service';
 import { Professor } from '../../../professors/models';
 import { ProfessorsApiService } from '../../../professors/services/professors-api.service';
 import { Store } from '@ngrx/store';
-import { CourseActions, selectCourse } from '../../store';
+import {
+  CourseActions,
+  selectCourse,
+  selectIsLoadingCourses,
+} from '../../store';
 import { EnrollmentActions } from '../../../enrollments/store';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ActionsMessages } from 'src/app/core/enums/messages';
@@ -24,6 +28,7 @@ export class CourseDetailsComponent implements OnDestroy {
   public course$: Observable<Course | null>;
   public editions$!: Observable<CourseEdition[]>;
   public professors$: Observable<Professor[]>;
+  public isLoading$: Observable<boolean>;
   public editionId: number;
   tableColumns: string[] = [
     'id',
@@ -52,6 +57,7 @@ export class CourseDetailsComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$));
     this.asignEditions();
     this.professors$ = this.profesorApiService.getProfessors();
+    this.isLoading$ = this.store.select(selectIsLoadingCourses);
   }
 
   public newEdition(courseId: number): void {
