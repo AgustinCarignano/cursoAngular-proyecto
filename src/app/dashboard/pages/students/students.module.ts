@@ -9,7 +9,6 @@ import { StudentsFormComponent } from './components/student-form/student-form.co
 import { StudentsTableComponent } from './components/student-table/student-table.component';
 import { StudentsRoutingModule } from './students-routing.module';
 import { StudentsDialogService } from './services/student-dialog.service';
-import { StudentDetailComponent } from './components/student-detail/student-detail.component';
 import { PersonModule } from '../../commons/person/person.module';
 import { PersonDialogService } from '../../commons/person/services/person-dialog.service';
 
@@ -18,7 +17,6 @@ import { PersonDialogService } from '../../commons/person/services/person-dialog
     StudentsComponent,
     StudentsFormComponent,
     StudentsTableComponent,
-    StudentDetailComponent,
   ],
   imports: [
     CommonModule,
