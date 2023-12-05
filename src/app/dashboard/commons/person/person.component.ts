@@ -11,6 +11,7 @@ export class PersonComponent {
   @Input() title!: string;
   @Input() addButtonLabel!: string;
   @Input() persons!: Person[];
+  @Input() public isLoading!: boolean;
   @Output() onAdd: EventEmitter<void> = new EventEmitter();
   @Output() onEdit: EventEmitter<Person> = new EventEmitter();
   @Output() onDelete: EventEmitter<number> = new EventEmitter();

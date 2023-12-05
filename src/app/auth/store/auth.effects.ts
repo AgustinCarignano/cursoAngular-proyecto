@@ -3,6 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthActions } from './auth.actions';
 import { concatMap, map, catchError, of, tap, EMPTY, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { Paths } from 'src/app/dashboard/enums/paths.enum';
 
 @Injectable()
 export class AuthEffects {
@@ -13,6 +15,7 @@ export class AuthEffects {
         this.authService.checkStoredInfo().pipe(
           map((data) => {
             if (data) {
+              this.router.navigate([Paths.DASHBOARD]);
               return AuthActions.loadAuthInfoSuccess({ data });
             } else {
               return AuthActions.loadAuthInfoFailure({
@@ -41,5 +44,9 @@ export class AuthEffects {
     );
   });
 
-  constructor(private actions$: Actions, private authService: AuthService) {}
+  constructor(
+    private actions$: Actions,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 }

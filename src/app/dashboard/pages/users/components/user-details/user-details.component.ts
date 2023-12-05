@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { UserActions, selectOneUser } from '../../store';
+import { UserActions, selectIsLoadingUsers, selectOneUser } from '../../store';
 import { UserDialogService } from '../../services/user-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmSnackbarComponent } from 'src/app/shared/components/confirm-snackbar/confirm-snackbar.component';
@@ -16,6 +16,7 @@ import { Paths } from 'src/app/dashboard/enums/paths.enum';
 })
 export class UserDetailsComponent {
   public user$: Observable<User | null>;
+  public isLoading$: Observable<boolean>;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,6 +27,7 @@ export class UserDetailsComponent {
   ) {
     this.loadUser();
     this.user$ = this.store.select(selectOneUser);
+    this.isLoading$ = this.store.select(selectIsLoadingUsers);
   }
 
   loadUser(): void {

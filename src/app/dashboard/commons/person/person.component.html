@@ -6,11 +6,14 @@
     {{ addButtonLabel | uppercase }}
   </button>
 </div>
-<!-- <ng-container *ngIf="persons$ | async as persons"> -->
-<app-person-table
-  [data]="persons"
-  (onEdit)="editPerson($event)"
-  (onDelete)="deletePerson($event)"
-></app-person-table>
-<!-- </ng-container> -->
-<!-- </div> -->
+<ng-container *ngIf="!isLoading; else loading">
+  <app-person-table
+    [data]="persons"
+    (onEdit)="editPerson($event)"
+    (onDelete)="deletePerson($event)"
+  ></app-person-table>
+</ng-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

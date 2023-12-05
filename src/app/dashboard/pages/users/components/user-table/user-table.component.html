@@ -26,10 +26,20 @@
       >
         <mat-icon>visibility</mat-icon>
       </button>
-      <button mat-icon-button color="primary" (click)="editUser(user)">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="editUser(user)"
+        [disabled]="user.id === 2 || user.id === 3"
+      >
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" (click)="deleteUser(user.id)">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="deleteUser(user.id)"
+        [disabled]="user.id === 2 || user.id === 3"
+      >
         <mat-icon>delete</mat-icon>
       </button>
     </td>

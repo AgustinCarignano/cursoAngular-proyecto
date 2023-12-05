@@ -1,6 +1,6 @@
 # CursoAngularProyecto
 
-Proyecto del curso de Angular realizado en CoderHouse
+Proyecto final del curso de Angular realizado en CoderHouse
 
 ## Descripción
 
@@ -37,4 +37,4 @@ npm run test
 
 ## Pruebas del proyecto
 
-Existen dos usuarios ya creados, uno con permisos de "administrador" y otro con permisos de "empleado". Cuando se carga la pantalla de login, se puede hacer uso del botón de ayuda para cargar los datos de cualquiera de estos dos usuarios de prueba.
+Existen dos usuarios ya creados, uno con permisos de "administrador" y otro con permisos de "empleado". Cuando se carga la pantalla de login, se puede hacer uso del botón de ayuda para cargar los datos de cualquiera de estos dos usuarios de prueba. Estos usuarios no pueden editarse o eliminarse, por lo que las pruebas sobre el modelos de usuarios requieren de la creacion de uno nuevo.
