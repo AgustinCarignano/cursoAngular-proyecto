@@ -21,17 +21,21 @@ export class CourseApiService extends HttpService<APICourse> {
   }
 
   getOneCourse(courseid: number): Observable<Course> {
-    return this.getOne(courseid).pipe(map((course) => new Course(course)));
+    return this.getOne(courseid, '_embed=editions').pipe(
+      map((course) => new Course(course))
+    );
   }
 
   updateCourse(course: Course): Observable<Course[]> {
-    return this.update(course.id, course).pipe(
+    const apiCourse = new APICourse(course);
+    return this.update(course.id, apiCourse).pipe(
       map((courses) => courses.map((c) => new Course(c)))
     );
   }
 
   createCourse(course: Course): Observable<Course[]> {
-    return this.create(course).pipe(
+    const apiCourse = new APICourse(course);
+    return this.create(apiCourse).pipe(
       map((courses) => courses.map((c) => new Course(c)))
     );
   }

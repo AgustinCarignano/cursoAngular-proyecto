@@ -1,15 +1,17 @@
 import { inject } from '@angular/core';
-import { map, take } from 'rxjs';
+import { map } from 'rxjs';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { Paths } from 'src/app/dashboard/enums/paths.enum';
+import { Store } from '@ngrx/store';
+import { AuthActions } from 'src/app/auth/store';
+import { selectAuthInfo } from 'src/app/auth/store/auth.selectors';
 
-export const hasSessionGuard: CanActivateFn = (route, state) => {
+export const hasSessionGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const authService = inject(AuthService);
+  const store = inject(Store);
 
-  return authService.localStorageInfo.pipe(
-    take(1),
+  store.dispatch(AuthActions.loadAuthInfo());
+  return store.select(selectAuthInfo).pipe(
     map((user) => {
       return user ? router.createUrlTree([Paths.DASHBOARD]) : true;
     })

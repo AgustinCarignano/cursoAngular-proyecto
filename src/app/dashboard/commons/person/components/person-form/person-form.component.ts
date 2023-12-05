@@ -25,7 +25,6 @@ export class PersonFormComponent {
 
   closeDialog(): void {
     this.dialogRef.close();
-    // this.onCancel.next();
   }
 
   submitForm(): void {
@@ -34,7 +33,6 @@ export class PersonFormComponent {
       return;
     }
     const newData = this.form.value as Partial<Person>;
-    // this.onSubmit.next(newData);
     if (this.data.person) {
       this.dialogRef.close({ ...newData, id: this.data.person.id });
     } else {

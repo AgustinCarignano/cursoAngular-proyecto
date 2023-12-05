@@ -1,0 +1,29 @@
+<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+<ng-container *ngIf="!(isLoading$ | async); else loading">
+  <app-person-detail
+    *ngIf="professor$ | async as professor"
+    [person]="professor"
+    [title]="pagetitle"
+  >
+    <ng-container
+      *ngIf="
+        professor.editions && professor.editions.length > 0;
+        else emptyList
+      "
+    >
+      <div *ngFor="let edition of professor.editions">
+        {{ edition | relatedCourses }}
+      </div>
+    </ng-container>
+  </app-person-detail>
+</ng-container>
+
+<ng-template #emptyList>
+  <app-empty-state
+    [message]="'There are no courses assigned to this professor.'"
+  ></app-empty-state>
+</ng-template>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

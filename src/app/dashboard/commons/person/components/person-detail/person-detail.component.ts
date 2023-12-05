@@ -9,6 +9,6 @@ import { Person } from '../../models/person.model';
   styleUrls: ['./person-detail.component.scss'],
 })
 export class PersonDetailComponent {
-  @Input() public person$?: Observable<Person>;
+  @Input() public person!: Person;
   @Input() public title = 'Details';
 }

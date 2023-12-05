@@ -7,6 +7,7 @@ import { ValidationErrors } from '@angular/forms';
 export class ShowErrorPipe implements PipeTransform {
   private requiredError = 'This field is required';
   private emailError = 'Must provide a valid email';
+  private repeatPassError = 'Passwords do not match';
   private maxLengthError = (n: number) =>
     `The maximum length of this field is ${n} characters.`;
   private minLengthError = (n: number) =>
@@ -16,6 +17,7 @@ export class ShowErrorPipe implements PipeTransform {
     const errorMessage: string[] = [];
     if (value?.['required']) errorMessage.push(this.requiredError);
     if (value?.['email']) errorMessage.push(this.emailError);
+    if (value?.['repeat']) errorMessage.push(this.repeatPassError);
     if (value?.['maxlength'])
       errorMessage.push(
         this.maxLengthError(value['maxlength']['requiredLength'])

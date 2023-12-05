@@ -1,9 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { HttpService } from 'src/app/core/services/http.service';
 import { Student } from '../models/student.model';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment.local';
 import { APIStudent } from '../models/student-api.model';
 
@@ -21,8 +19,8 @@ export class StudentApiService extends HttpService<APIStudent> {
     );
   }
 
-  getOneStudent(courseid: number): Observable<Student> {
-    return this.getOne(courseid).pipe(map((student) => new Student(student)));
+  getOneStudent(studentId: number): Observable<Student> {
+    return this.getOne(studentId).pipe(map((student) => new Student(student)));
   }
 
   updateStudent(student: Student): Observable<Student[]> {
@@ -37,8 +35,8 @@ export class StudentApiService extends HttpService<APIStudent> {
     );
   }
 
-  deleteStudent(courseId: number): Observable<Student[]> {
-    return this.delete(courseId).pipe(
+  deleteStudent(studentId: number): Observable<Student[]> {
+    return this.delete(studentId).pipe(
       map((students) => students.map((s) => new Student(s)))
     );
   }

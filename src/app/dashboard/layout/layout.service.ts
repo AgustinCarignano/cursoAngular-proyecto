@@ -22,6 +22,11 @@ export class LayoutService {
       icon: 'groups',
     },
     {
+      label: Paths.PROFESORS,
+      href: ['', Paths.DASHBOARD, Paths.PROFESORS],
+      icon: 'supervised_user_circle',
+    },
+    {
       label: Paths.COURSES,
       href: ['', Paths.DASHBOARD, Paths.COURSES],
       icon: 'toc',
@@ -30,11 +35,6 @@ export class LayoutService {
       label: Paths.ENROLLMENTS,
       href: ['', Paths.DASHBOARD, Paths.ENROLLMENTS],
       icon: 'view_agenda',
-    },
-    {
-      label: Paths.PROFESORS,
-      href: ['', Paths.DASHBOARD, Paths.PROFESORS],
-      icon: 'supervised_user_circle',
     },
   ];
 }

@@ -1,0 +1,172 @@
+<!-- <mat-card>
+  <mat-card-header class="mb-3">
+    <mat-card-title>Search toolbar</mat-card-title>
+    <mat-card-subtitle>All fields are optionals</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form">
+      <div class="row">
+        <mat-form-field class="col-4">
+          <mat-label>Select a course</mat-label>
+          <input
+            formControlName="editionId"
+            type="text"
+            placeholder="Select one or write it"
+            aria-label="Number"
+            matInput
+            [matAutocomplete]="autoCourse"
+          />
+          <mat-autocomplete
+            #autoCourse="matAutocomplete"
+            [displayWith]="displayEditionFn.bind(this)"
+          >
+            <mat-option *ngFor="let edition of editions" [value]="edition.id">
+              {{ edition.course?.title }} -
+              {{ edition.startDate | date : "dd/MMM/yyyy" }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="col-4">
+          <mat-label>Select a range of date</mat-label>
+          <mat-date-range-input
+            formGroupName="dateRange"
+            [rangePicker]="picker"
+          >
+            <input
+              matStartDate
+              formControlName="start"
+              placeholder="Start date"
+            />
+            <input matEndDate formControlName="end" placeholder="End date" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <mat-form-field class="col-4">
+          <mat-label>Select a student</mat-label>
+          <input
+            formControlName="studentId"
+            type="text"
+            placeholder="DNI, name or surname"
+            aria-label="Number"
+            matInput
+            [matAutocomplete]="autoStudent"
+          />
+          <mat-autocomplete
+            #autoStudent="matAutocomplete"
+            [displayWith]="displayStudentFn.bind(this)"
+          >
+            <mat-option *ngFor="let student of students" [value]="student.id">
+              {{ student | fullName }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <button
+          mat-flat-button
+          color="primary"
+          class="col-2 m-auto"
+          (click)="onSearch()"
+        >
+          <mat-icon>search</mat-icon>
+          Search
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card> -->
+
+<mat-accordion multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Search toolbar</mat-panel-title>
+      <mat-panel-description>Filter the enrollment list</mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="form">
+      <div class="row">
+        <mat-form-field>
+          <mat-label>Filter by</mat-label>
+          <mat-select formControlName="filterBy">
+            <!-- <mat-option>None</mat-option> -->
+            <mat-option *ngFor="let option of options" [value]="option.value">
+              {{ option.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="showInput('editionId')" class="col-4">
+          <mat-label>Select a course</mat-label>
+          <input
+            formControlName="editionId"
+            type="text"
+            placeholder="Select one or write it"
+            aria-label="Number"
+            matInput
+            [matAutocomplete]="autoCourse"
+          />
+          <mat-autocomplete
+            #autoCourse="matAutocomplete"
+            [displayWith]="displayEditionFn.bind(this)"
+          >
+            <mat-option *ngFor="let edition of editions" [value]="edition.id">
+              {{ edition.course?.title }} -
+              {{ edition.startDate | date : "dd/MMM/yyyy" }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field *ngIf="showInput('studentId')" class="col-4">
+          <mat-label>Select a range of date</mat-label>
+          <mat-date-range-input
+            formGroupName="dateRange"
+            [rangePicker]="picker"
+          >
+            <input
+              matStartDate
+              formControlName="start"
+              placeholder="Start date"
+            />
+            <input matEndDate formControlName="end" placeholder="End date" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <mat-form-field *ngIf="showInput('studentId')" class="col-4">
+          <mat-label>Select a student</mat-label>
+          <input
+            formControlName="studentId"
+            type="text"
+            placeholder="DNI, name or surname"
+            aria-label="Number"
+            matInput
+            [matAutocomplete]="autoStudent"
+          />
+          <mat-autocomplete
+            #autoStudent="matAutocomplete"
+            [displayWith]="displayStudentFn.bind(this)"
+          >
+            <mat-option *ngFor="let student of students" [value]="student.id">
+              {{ student | fullName }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <button
+          mat-flat-button
+          color="primary"
+          class="col-2 m-auto"
+          (click)="onSearch()"
+        >
+          <mat-icon>search</mat-icon>
+          Search
+        </button>
+      </div>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

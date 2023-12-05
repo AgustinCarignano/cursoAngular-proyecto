@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, tap, throwIfEmpty } from 'rxjs';
 import {
   AuthResponse,
   LoginRequest,
@@ -22,8 +22,25 @@ export class AuthService {
   public localStorageInfo: Observable<AuthResponse | null> =
     this._localStorageInfo.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {
-    this.checkSession();
+  constructor(private http: HttpClient, private router: Router) {}
+
+  public storeLogin(data: LoginRequest): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(`${this.base_url}/login`, data)
+      .pipe(tap((resp) => this.openSession(resp)));
+  }
+
+  public checkStoredInfo(): Observable<AuthResponse | null> {
+    const item = localStorage.getItem(this.storageName);
+    if (!item) return of(null);
+    const data: AuthResponse = JSON.parse(item);
+    return this.http
+      .get<User[]>(`${this.base_url}/${Paths.USERS}?email=${data.user.email}`, {
+        headers: {
+          Authorization: 'Bearer ' + data.accessToken,
+        },
+      })
+      .pipe(map(() => data));
   }
 
   public login(data: LoginRequest): void {
@@ -65,16 +82,11 @@ export class AuthService {
   }
 
   public getTokenvalue(): string {
-    return this._localStorageInfo.getValue()?.accessToken || '';
+    return localStorage.getItem(this.storageName) || '';
   }
 
   private openSession(info: AuthResponse): void {
-    const itemToStore: AuthResponse = {
-      accessToken: info.accessToken,
-      user: { email: info.user.email },
-    };
-    localStorage.setItem(this.storageName, JSON.stringify(itemToStore));
-    this._localStorageInfo.next(itemToStore);
+    localStorage.setItem(this.storageName, JSON.stringify(info));
     this.router.navigate([Paths.DASHBOARD]);
   }
 
@@ -94,7 +106,5 @@ export class AuthService {
 
   private destroySession(): void {
     localStorage.removeItem(this.storageName);
-    this._localStorageInfo.next(null);
-    // this.router.createUrlTree([Paths.AUTH]);
   }
 }

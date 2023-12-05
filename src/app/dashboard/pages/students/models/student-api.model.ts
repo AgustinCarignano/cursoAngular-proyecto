@@ -1,7 +1,10 @@
 import { APIPerson } from 'src/app/dashboard/commons/person/models/person.model';
 import { Student } from './student.model';
+import { Enrollment } from '../../enrollments/models';
 
-export interface IAPIStudent extends APIPerson {}
+export interface IAPIStudent extends APIPerson {
+  enrollments?: Enrollment[];
+}
 
 export class APIStudent implements IAPIStudent {
   id: number;
@@ -14,6 +17,7 @@ export class APIStudent implements IAPIStudent {
   country: string;
   province: string;
   city: string;
+  enrollments?: Enrollment[];
 
   constructor(data: Student) {
     this.id = data.id;

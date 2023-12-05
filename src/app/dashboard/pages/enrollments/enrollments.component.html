@@ -1,4 +1,18 @@
-<p>
-  A list of next courses edition, ordered by date an with the number of enrolled
-  students. In details, list of all students
-</p>
+<h1 appTitle>List of Enrollments</h1>
+<div class="button">
+  <button mat-flat-button color="primary" (click)="onAddEnrollment()">
+    <mat-icon>add</mat-icon>{{ "New Enrollment" | titlecase }}
+  </button>
+</div>
+<ng-container *ngIf="editionEnrollments$ | async as data; else loading">
+  <app-enrollment-table
+    [dataSource]="getFilterData(data)"
+    (addStudent)="onAddStudent($event)"
+    (deleteEnrollment)="onDeleteEnrollment($event)"
+    (editEdition)="onEditEdition($event)"
+  ></app-enrollment-table>
+</ng-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

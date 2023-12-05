@@ -7,4 +7,6 @@ export const enum ActionsMessages {
   deletedProfessor = 'Professor deleted',
   addedCourse = 'New course added',
   editedCourse = 'Course edited',
+  deletedCourse = 'Course deleted',
+  addedEnrollment = 'New enrollment added',
 }

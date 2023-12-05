@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <div class="row" *ngIf="showEditions">
+      <mat-form-field>
+        <mat-label>Select a course</mat-label>
+        <mat-select formControlName="editionId">
+          <mat-option
+            *ngFor="let edition of editions$ | async"
+            [value]="edition.id"
+            >{{ edition.course?.title }} -
+            {{ edition.startDate | date : "dd/MMM/yyyy" }}</mat-option
+          >
+        </mat-select>
+        <mat-error>{{ form | getError : "editionId" | showError }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Select a student</mat-label>
+        <mat-select formControlName="studentId">
+          <mat-option
+            *ngFor="let student of students$ | async"
+            [value]="student.id"
+            >{{ student | fullName }}</mat-option
+          >
+        </mat-select>
+        <mat-error>{{ form | getError : "studentId" | showError }}</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="onSubmit()" cdkFocusInitial>Save</button>
+</div>

@@ -5,7 +5,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { LayoutComponent } from './layout.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
 import { SharedModule } from '../../shared/shared.module';
 import { RouterModule } from '@angular/router';
 
@@ -16,7 +15,6 @@ import { RouterModule } from '@angular/router';
     MatSidenavModule,
     SharedModule,
     MatToolbarModule,
-    MatMenuModule,
     RouterModule,
   ],
   exports: [LayoutComponent],

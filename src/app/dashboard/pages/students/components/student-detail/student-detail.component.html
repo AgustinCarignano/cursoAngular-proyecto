@@ -1,91 +1,31 @@
-<!-- <div class="container">
-  <h1 appTitle>Student details</h1>
-  <ng-container *ngIf="student$ | async as student">
-    <mat-accordion multi>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title> Personal information </mat-panel-title>
-          <mat-panel-description class="d-flex justify-content-end">
-            <mat-icon>account_circle</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="m-3 row">
-          <div class="col-3">
-            <p><strong>First name</strong></p>
-            <p>{{ student.firstName }}</p>
-          </div>
-          <div class="col-3">
-            <p><strong>Last name</strong></p>
-            <p>{{ student.lastName }}</p>
-          </div>
-          <div class="col-3">
-            <p><strong>Age</strong></p>
-            <p>{{ student.birthdate | age }}</p>
-          </div>
-          <div class="col-3">
-            <p><strong>DNI</strong></p>
-            <p>{{ student.dni }}</p>
-          </div>
-        </div>
-      </mat-expansion-panel>
+<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+<ng-container *ngIf="!(isLoading$ | async); else loading">
+  <app-person-detail
+    *ngIf="student$ | async as student"
+    [person]="student"
+    [title]="pageTitle"
+  >
+    <ng-container
+      *ngIf="
+        student.enrollments && student.enrollments.length > 0;
+        else emptyList
+      "
+    >
+      <div *ngFor="let enrollment of student.enrollments">
+        <ng-container *ngIf="enrollment.edition">
+          {{ enrollment.edition | relatedCourses }}
+        </ng-container>
+      </div>
+    </ng-container>
+  </app-person-detail>
+</ng-container>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title> Contact information</mat-panel-title>
-          <mat-panel-description class="d-flex justify-content-end">
-            <mat-icon>contact_page</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="m-3 row">
-          <div class="col-3">
-            <p><strong>Email</strong></p>
-            <p>{{ student.email }}</p>
-          </div>
-          <div class="col-3">
-            <p><strong>Phone number</strong></p>
-            <p>{{ student.phoneNumber }}</p>
-          </div>
-        </div>
-      </mat-expansion-panel>
+<ng-template #emptyList>
+  <app-empty-state
+    [message]="'There are no courses for this student.'"
+  ></app-empty-state>
+</ng-template>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title> Address information</mat-panel-title>
-          <mat-panel-description class="d-flex justify-content-end">
-            <mat-icon>home</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="m-3 row">
-          <div class="col-3">
-            <p><strong>Country</strong></p>
-            <p>{{ student.country }}</p>
-          </div>
-          <div class="col-3">
-            <p><strong>Province</strong></p>
-            <p>{{ student.province }}</p>
-          </div>
-          <div class="col-3">
-            <p><strong>City</strong></p>
-            <p>{{ student.city }}</p>
-          </div>
-        </div>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title> Courses </mat-panel-title>
-          <mat-panel-description class="d-flex justify-content-end">
-            <mat-icon>toc</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div>
-          <p>
-            (list of courses for which the student is enrolled, including
-            completed courses)
-          </p>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </ng-container>
-</div> -->
-<app-person-detail [person$]="student$" [title]="pageTitle"></app-person-detail>
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

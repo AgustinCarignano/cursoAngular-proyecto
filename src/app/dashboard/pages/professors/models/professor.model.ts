@@ -1,5 +1,6 @@
 import { Person } from 'src/app/dashboard/commons/person/models/person.model';
 import { APIProfessor } from './professor-api.model';
+import { CourseEdition } from '../../courses/models';
 
 export class Professor implements Person {
   birthdate: Date;
@@ -12,6 +13,7 @@ export class Professor implements Person {
   country: string;
   province: string;
   city: string;
+  editions?: CourseEdition[];
 
   constructor(data: APIProfessor) {
     this.birthdate = new Date(data.birthdate);
@@ -24,5 +26,6 @@ export class Professor implements Person {
     this.country = data.country;
     this.province = data.province;
     this.city = data.city;
+    this.editions = data.editions?.map((e) => new CourseEdition(e));
   }
 }

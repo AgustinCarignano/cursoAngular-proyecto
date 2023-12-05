@@ -4,19 +4,20 @@
   </button>
   <span class="logo">CoderApp</span>
   <span class="spacer"></span>
-  <span *ngIf="user | async as user">{{ user.firstName | titlecase }}</span>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-
-  <mat-menu #menu="matMenu" xPosition="before">
-    <button mat-menu-item>
-      <mat-icon>manage_accounts</mat-icon>
-      <span>Account</span>
+  <ng-container *ngIf="user$ | async as user">
+    <span>{{ user.firstName | titlecase }}</span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
     </button>
-    <button mat-menu-item (click)="onLogout()">
-      <mat-icon>logout</mat-icon>
-      <span>Logout</span>
-    </button>
-  </mat-menu>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="goToAccount(user.id)">
+        <mat-icon>manage_accounts</mat-icon>
+        <span>Account</span>
+      </button>
+      <button mat-menu-item (click)="onLogout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </ng-container>
 </mat-toolbar>

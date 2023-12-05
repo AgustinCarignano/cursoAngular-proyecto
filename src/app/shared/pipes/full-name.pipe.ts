@@ -1,16 +1,20 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Person } from 'src/app/dashboard/commons/person/models/person.model';
 import { Student } from 'src/app/dashboard/pages/students/models/student.model';
+import { User } from 'src/app/dashboard/pages/users/models/user.model';
 
 @Pipe({
   name: 'fullName',
 })
 export class FullNamePipe implements PipeTransform {
-  transform(value: Student, capitalize = true): string {
+  transform(value?: Person | User, capitalize = true): string {
+    if (!value) return '';
+    const copyOfValue = structuredClone(value);
     if (capitalize) {
-      value.lastName = this.capitalize(value.lastName);
-      value.firstName = this.capitalize(value.firstName);
+      copyOfValue.lastName = this.capitalize(copyOfValue.lastName);
+      copyOfValue.firstName = this.capitalize(copyOfValue.firstName);
     }
-    return `${value.lastName}, ${value.firstName}`;
+    return `${copyOfValue.lastName}, ${copyOfValue.firstName}`;
   }
 
   private capitalize(v: string): string {

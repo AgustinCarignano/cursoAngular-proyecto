@@ -1,4 +1,20 @@
 <h1>Login</h1>
+<button
+  mat-icon-button
+  color="primary"
+  class="form__help-button"
+  [matMenuTriggerFor]="menu"
+>
+  <mat-icon>help</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="autoComplete('admin')">
+    <span>Admin credentials</span>
+  </button>
+  <button mat-menu-item (click)="autoComplete('employee')">
+    <span>Employee credentials</span>
+  </button>
+</mat-menu>
 <form [formGroup]="form" class="form">
   <mat-form-field class="form__field">
     <mat-label> Email </mat-label>
@@ -11,7 +27,7 @@
     <mat-error>{{ form | getError : "password" | showError }}</mat-error>
   </mat-form-field>
   <div class="form__actions">
-    <a mat-flat-button [routerLink]="['', 'auth', 'register']">Register</a>
+    <!-- <a mat-flat-button [routerLink]="['', 'auth', 'register']">Register</a> -->
     <button mat-flat-button color="primary" (click)="onLogin()">Login</button>
   </div>
 </form>

@@ -1,0 +1,60 @@
+<h1 appTitle>User account</h1>
+<ng-container *ngIf="!(isLoading$ | async); else loading">
+  <ng-container *ngIf="user$ | async as user">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Basic information</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="container">
+        <div class="row">
+          <div class="col-6 item">
+            <h3>First name</h3>
+            <p>{{ user.firstName }}</p>
+          </div>
+          <div class="col-6 item">
+            <h3>Last name</h3>
+            <p>{{ user.lastName }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 item">
+            <h3>Email</h3>
+            <p>{{ user.email }}</p>
+          </div>
+          <div class="col-6 item">
+            <h3>Role</h3>
+            <p>{{ user.role }}</p>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button
+          mat-button
+          (click)="editBasicInformation(user)"
+          [disabled]="user.id === 2 || user.id === 3"
+        >
+          Edit basic information
+        </button>
+        <button
+          mat-button
+          (click)="changePassword(user)"
+          [disabled]="user.id === 2 || user.id === 3"
+        >
+          Change password
+        </button>
+        <button
+          mat-button
+          color="warn"
+          (click)="deleteUser(user.id)"
+          [disabled]="user.id === 2 || user.id === 3"
+        >
+          Delete account
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+</ng-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

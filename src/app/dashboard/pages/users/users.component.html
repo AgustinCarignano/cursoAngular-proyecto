@@ -1,4 +1,22 @@
-<p>
-  List of all users registered in the application, with the role and,
-  conditionally, with a button to edit a user's role or delete it
-</p>
+<h1 appTitle>List of users</h1>
+<ng-container *ngIf="loggedUser$ | async as user">
+  <button
+    mat-flat-button
+    color="primary"
+    class="button"
+    (click)="addUser()"
+    [disabled]="user.role !== 'admin'"
+  >
+    <mat-icon>add</mat-icon>{{ "New user" | uppercase }}
+  </button>
+</ng-container>
+<app-user-table
+  *ngIf="users$ | async as users; else loading"
+  [dataSource]="users"
+  (onEdit)="editUser($event)"
+  (onDelete)="deleteUser($event)"
+></app-user-table>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

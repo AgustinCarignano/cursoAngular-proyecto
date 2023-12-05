@@ -1,0 +1,12 @@
+<div class="container">
+  <ng-container *ngFor="let item of breadcrumbs; index as i">
+    {{ i > 0 ? " > " : "" }}
+    <ng-container *ngIf="item.path; else noLinkBreadcrumb">
+      <a [routerLink]="item.path" class="container__link">{{ item.label }}</a>
+    </ng-container>
+    <ng-template #noLinkBreadcrumb>
+      <span class="container__link">{{ item.label }}</span>
+    </ng-template>
+  </ng-container>
+</div>
+<mat-divider></mat-divider>

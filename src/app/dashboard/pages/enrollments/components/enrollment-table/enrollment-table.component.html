@@ -1,0 +1,110 @@
+<table
+  mat-table
+  [dataSource]="dataSource"
+  multiTemplateDataRows
+  class="mat-elevation-z3"
+>
+  <ng-container matColumnDef="course">
+    <th mat-header-cell *matHeaderCellDef>Course</th>
+    <td mat-cell *matCellDef="let edition">{{ edition.course.title }}</td>
+  </ng-container>
+  <ng-container matColumnDef="startDate">
+    <th mat-header-cell *matHeaderCellDef>Start Date</th>
+    <td mat-cell *matCellDef="let edition">
+      {{ edition.startDate | date : "dd/MM/yyyy" }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="endDate">
+    <th mat-header-cell *matHeaderCellDef>End Date</th>
+    <td mat-cell *matCellDef="let edition">
+      {{ edition.endDate | date : "dd/MM/yyyy" }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="professor">
+    <th mat-header-cell *matHeaderCellDef>Professor</th>
+    <td mat-cell *matCellDef="let edition">
+      {{ edition.professor | fullName }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>actions</th>
+    <td mat-cell *matCellDef="let edition">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="onAddStudent(edition.id)"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="onEditEdition(edition.course.id)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="expand">
+    <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
+    <td mat-cell *matCellDef="let edition" style="text-align: right">
+      <button
+        mat-icon-button
+        aria-label="expand row"
+        (click)="
+          expandedEdition = expandedEdition === edition ? null : edition;
+          $event.stopPropagation()
+        "
+      >
+        <mat-icon *ngIf="expandedEdition !== edition"
+          >keyboard_arrow_down</mat-icon
+        >
+        <mat-icon *ngIf="expandedEdition === edition"
+          >keyboard_arrow_up</mat-icon
+        >
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td
+      mat-cell
+      *matCellDef="let edition"
+      [attr.colspan]="columnsToDisplayWithExpand.length"
+    >
+      <div
+        class="edition-detail"
+        *ngIf="edition.enrollments.length > 0"
+        [@detailExpand]="edition == expandedEdition ? 'expanded' : 'collapsed'"
+      >
+        <h3>Enrolled students</h3>
+        <ul>
+          <li *ngFor="let enrollment of edition.enrollments">
+            <p>{{ enrollment.student | fullName }}</p>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="onDeleteStudent(enrollment)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+  <tr
+    mat-row
+    *matRowDef="let edition; columns: columnsToDisplayWithExpand"
+    class="edition-row"
+    [class.expanded-row]="expandedEdition === edition"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="detail-row"
+  ></tr>
+</table>

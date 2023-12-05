@@ -1,21 +1,69 @@
-<div class="container m-4 d-flex justify-content-around">
+<div class="container p-4 d-flex justify-content-around">
   <div>
     <app-home-card
-      *ngIf="coursesData$ | async as data"
+      *ngIf="coursesData$ | async as data; else loadingCard"
       [data]="data"
     ></app-home-card>
   </div>
   <div>
     <app-home-card
-      *ngIf="studentsData$ | async as data"
+      *ngIf="studentsData$ | async as data; else loadingCard"
       [data]="data"
     ></app-home-card>
   </div>
   <div>
     <app-home-card
-      *ngIf="professorsData$ | async as data"
+      *ngIf="professorsData$ | async as data; else loadingCard"
       [data]="data"
     ></app-home-card>
   </div>
 </div>
-<div>(TODO - calendar)</div>
+<ng-container *ngIf="events$ | async as events; else loading">
+  <h1 appTitle class="title">course calendar</h1>
+  <div class="controls">
+    <button mat-icon-button color="primary" (click)="changeMonth('back')">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button mat-button [matMenuTriggerFor]="months">
+      {{ viewDate | date : "MMMM" }}
+    </button>
+    <mat-menu #months="matMenu">
+      <button
+        mat-menu-item
+        *ngFor="let month of monthsList"
+        (click)="setNewMonth(month.number)"
+      >
+        {{ month.name }}
+      </button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="years">
+      {{ viewDate | date : "yyyy" }}
+    </button>
+    <mat-menu #years="matMenu">
+      <button
+        mat-menu-item
+        *ngFor="let year of yearsList"
+        (click)="setNewYear(year)"
+      >
+        {{ year }}
+      </button>
+    </mat-menu>
+    <button mat-icon-button color="primary" (click)="changeMonth('next')">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+  <mwl-calendar-month-view
+    class="container"
+    [viewDate]="viewDate"
+    [events]="events"
+  >
+  </mwl-calendar-month-view>
+</ng-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>
+
+<ng-template #loadingCard>
+  <app-home-card [isLoading]="true"></app-home-card>
+</ng-template>

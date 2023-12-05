@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import { Student } from './models/student.model';
-// import { StudentsService } from './services/student.service';
-import { Observable } from 'rxjs';
-import { StudentsDialogService } from './services/student-dialog.service';
+import { Observable, tap } from 'rxjs';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ActionsMessages } from '../../../core/enums/messages';
-import { StudentApiService } from './services/student-api.service';
 import { PersonDialogService } from '../../commons/person/services/person-dialog.service';
 import { StudentForm } from './models/student-form.model';
+import { Store } from '@ngrx/store';
+import {
+  StudentActions,
+  selectIsLoadingStudents,
+  selectStudents,
+} from './store';
 
 @Component({
   selector: 'app-students',
@@ -15,25 +18,31 @@ import { StudentForm } from './models/student-form.model';
   styleUrls: ['./students.component.scss'],
 })
 export class StudentsComponent {
-  public students$: Observable<Student[]>;
+  public students$: Observable<Student[] | null>;
+  public isLoading$: Observable<boolean>;
   public buttonLabel = 'new student';
   public pageTitle = 'Student List';
 
   constructor(
-    private studentsApiService: StudentApiService,
     private dialogService: PersonDialogService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private store: Store
   ) {
-    this.students$ = this.studentsApiService.getStudents();
+    this.students$ = this.store.select(selectStudents).pipe(
+      tap((students) => {
+        if (!students) this.store.dispatch(StudentActions.loadStudents());
+      })
+    );
+    this.isLoading$ = this.store.select(selectIsLoadingStudents);
   }
 
   public newStudent(): void {
     this.dialogService
       .openFormDialog('New student', new StudentForm().form)
       .subscribe({
-        next: (data) => {
-          if (data) {
-            this.students$ = this.studentsApiService.createStudent(data);
+        next: (student) => {
+          if (student) {
+            this.store.dispatch(StudentActions.createStudent({ student }));
             this.notificationService.showNotification(
               ActionsMessages.addedStudent
             );
@@ -46,9 +55,9 @@ export class StudentsComponent {
     this.dialogService
       .openFormDialog('Edit student', new StudentForm(student).form, student)
       .subscribe({
-        next: (data) => {
-          if (data) {
-            this.students$ = this.studentsApiService.updateStudent(data);
+        next: (student) => {
+          if (student) {
+            this.store.dispatch(StudentActions.updateStudent({ student }));
             this.notificationService.showNotification(
               ActionsMessages.editedStudent
             );
@@ -61,7 +70,7 @@ export class StudentsComponent {
     this.dialogService.openConfirmDialog().subscribe({
       next: (resp) => {
         if (resp) {
-          this.students$ = this.studentsApiService.deleteStudent(studentId);
+          this.store.dispatch(StudentActions.deleteStudent({ studentId }));
           this.notificationService.showNotification(
             ActionsMessages.deletedStudent
           );

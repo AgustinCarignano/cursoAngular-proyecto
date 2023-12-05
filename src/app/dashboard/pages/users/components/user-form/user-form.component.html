@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" />
+        <mat-error>{{ form | getError : "firstName" | showError }}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" />
+        <mat-error>{{ form | getError : "lastName" | showError }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-error>{{ form | getError : "email" | showError }}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col" *ngIf="showPassField">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" />
+        <mat-error>{{ form | getError : "password" | showError }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-label>Select a Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option *ngFor="let role of roles" [value]="role.value">{{
+            role.viewValue
+          }}</mat-option>
+        </mat-select>
+        <mat-error>{{ form | getError : "role" | showError }}</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="submitForm()" cdkFocusInitial>Save</button>
+</div>

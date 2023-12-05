@@ -1,4 +1,6 @@
+import { APICourseEdition } from './course-api-edition.model';
 import { APICourse } from './course-api.model';
+import { CourseEdition } from './course-editions.model';
 
 export interface ICourse {
   id: number;
@@ -7,6 +9,7 @@ export interface ICourse {
   description: string;
   imgUrl: string;
   available: boolean;
+  editions?: CourseEdition[];
 }
 
 export class Course implements ICourse {
@@ -16,6 +19,7 @@ export class Course implements ICourse {
   description: string;
   imgUrl: string;
   available: boolean;
+  editions?: CourseEdition[];
 
   constructor(course: APICourse) {
     this.id = course.id;
@@ -24,5 +28,6 @@ export class Course implements ICourse {
     this.shortDescription = course.shortDescription;
     this.imgUrl = course.imgUrl;
     this.available = course.available;
+    this.editions = course.editions?.map((e) => new CourseEdition(e));
   }
 }
